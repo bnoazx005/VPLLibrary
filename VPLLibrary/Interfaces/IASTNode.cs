@@ -16,7 +16,23 @@ namespace VPLLibrary.Interfaces
         NT_EXPRESSION,
         NT_VALUE,
         NT_CALL,
+        NT_BINARY_LAMBDA_FUNC,
         NT_DEFAULT
+    }
+
+
+    /// <summary>
+    /// The enumeration contains all possible mathematical operations
+    /// </summary>
+
+    public enum E_OPERATION_TYPE
+    {
+        OT_ADD,
+        OT_SUB,
+        OT_MUL,
+        OT_DIV,
+        OT_MOD,
+        OT_POW,
     }
 
 
@@ -148,5 +164,22 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IList<IASTNode> Args { get; }
+    }
+
+
+    /// <summary>
+    /// interface IBinaryLambdaFuncASTNode
+    /// 
+    /// The interface represents a binary lambda functor within an AST
+    /// </summary>
+
+    public interface IBinaryLambdaFuncASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a type of mathematical operation
+        /// that the lambda executes
+        /// </summary>
+
+        E_OPERATION_TYPE OpType { get; }
     }
 }
