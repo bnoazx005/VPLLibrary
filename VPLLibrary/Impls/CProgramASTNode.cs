@@ -1,4 +1,5 @@
-﻿using VPLLibrary.Interfaces;
+﻿using System.Collections.Generic;
+using VPLLibrary.Interfaces;
 
 
 namespace VPLLibrary.Impls
@@ -11,13 +12,20 @@ namespace VPLLibrary.Impls
     /// assigment program  
     /// </summary>
 
-    public class CProgramASTNode: CBaseASTNode
+    public class CProgramASTNode : CBaseASTNode, IProgramASTNode
     {
-        public CProgramASTNode(IASTNode left, IASTNode right):
+        protected IList<IASTNode> mOperationsList;
+
+        public CProgramASTNode() :
             base(E_NODE_TYPE.NT_PROGRAM)
         {
-            mLeftChild  = left;
-            mRightChild = right;
+            mOperationsList = new List<IASTNode>();
+        }
+
+        public CProgramASTNode(IList<IASTNode> commands):
+            base(E_NODE_TYPE.NT_PROGRAM)
+        {
+            mOperationsList = commands;
         }
 
         /// <summary>
@@ -29,6 +37,18 @@ namespace VPLLibrary.Impls
         public override T Accept<T>(IVisitor<T> interpreter)
         {
             return interpreter.visitProgramNode(this);
+        }
+
+        /// <summary>
+        /// The readonly property returns a list of commands
+        /// </summary>
+
+        public IList<IASTNode> Operations
+        {
+            get
+            {
+                return mOperationsList;
+            }
         }
     }
 }

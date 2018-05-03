@@ -55,6 +55,22 @@ namespace VPLLibrary.Interfaces
 
 
     /// <summary>
+    /// interface IProgramASTNode
+    /// 
+    /// The interface represents a program node within an AST
+    /// </summary>
+
+    public interface IProgramASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a list of commands
+        /// </summary>
+
+        IList<IASTNode> Operations { get; }
+    }
+
+
+    /// <summary>
     /// interface IAssigmentASTNode
     /// 
     /// The interface represents an assigment within an AST
