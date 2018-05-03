@@ -14,7 +14,7 @@ namespace VPLLibraryTests.Tests
         {
             IInterpreter interpreter = new CInterpreter();
 
-            IASTNode program = new CProgramASTNode(null, null);
+            IASTNode program = new CProgramASTNode();
 
             int[][] input = new int[1][];
 
@@ -27,7 +27,7 @@ namespace VPLLibraryTests.Tests
         {
             IInterpreter interpreter = new CInterpreter();
 
-            IASTNode program = new CProgramASTNode(null, null);
+            IASTNode program = new CProgramASTNode();
 
             int[][] input = new int[1][];
 
@@ -36,6 +36,46 @@ namespace VPLLibraryTests.Tests
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<int[]>(result);
             Assert.IsEmpty(result);
+        }
+
+        [Test]
+        public void VisitIdentifierNode_NullArgument_ThrowsNullArgumentException()
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Assert.Throws<ArgumentNullException>(() => { interpreter.VisitIdentifierNode(null); });
+        }
+
+        [Test]
+        public void VisitIdentifierNode_CorrectArgument_ReturnsName()
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            IIdentifierASTNode identifierNode = new CIdentifierASTNode("TestId");
+
+            var result = interpreter.VisitIdentifierNode(identifierNode);
+
+            Assert.AreEqual(result, identifierNode.Name);
+        }
+
+        [Test]
+        public void VisitValueNode_NullArgument_ThrowsNullArgumentException()
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Assert.Throws<ArgumentNullException>(() => { interpreter.VisitValueNode(null); });
+        }
+
+        [Test]
+        public void VisitValueNode_CorrectArgument_ReturnsName()
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            IValueASTNode valueNode = new CValueASTNode(new int[] { 1, 2 });
+
+            var result = interpreter.VisitValueNode(valueNode);
+
+            Assert.AreEqual(result, valueNode.Value);
         }
     }
 }

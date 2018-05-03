@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using VPLLibrary.Interfaces;
 
 
@@ -41,29 +42,46 @@ namespace VPLLibrary.Impls
             return (int[])program.Accept(this);
         }
 
-        public Object visitProgramNode(IASTNode program)
+        public Object VisitProgramNode(IASTNode program)
         {
             if (program.Type != E_NODE_TYPE.NT_PROGRAM)
             {
                 throw new CRuntimeError("A root of an AST should have NT_PROGRAM type");
             }
 
+            IList<IASTNode> commands = (program as IProgramASTNode).Operations;
+
+            foreach (IASTNode currCommand in commands)
+            {
+                currCommand.Accept(this);
+            }
+
             return null;
         }
 
-        public Object visitAssigmentNode(IAssigmentASTNode assigment)
+        public Object VisitAssigmentNode(IAssigmentASTNode assigment)
         {
             return null;
         }
 
-        public Object visitIdentifierNode(IIdentifierASTNode identifier)
+        public Object VisitIdentifierNode(IIdentifierASTNode identifier)
         {
-            return null;
+            if (identifier == null)
+            {
+                throw new ArgumentNullException("identifier", "The argument cannot equal to null");
+            }
+
+            return identifier.Name;
         }
 
-        public Object visitValueNode(IValueASTNode value)
+        public Object VisitValueNode(IValueASTNode value)
         {
-            return null;
+            if (value == null)
+            {
+                throw new ArgumentNullException("value", "The argument cannot equal to null");
+            }
+
+            return value.Value;
         }
     }
 }

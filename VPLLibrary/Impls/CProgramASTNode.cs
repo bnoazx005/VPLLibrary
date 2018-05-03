@@ -36,7 +36,7 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.visitProgramNode(this);
+            return interpreter.VisitProgramNode(this);
         }
 
         /// <summary>

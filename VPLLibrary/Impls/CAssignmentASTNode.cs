@@ -32,7 +32,7 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.visitAssigmentNode(this);
+            return interpreter.VisitAssigmentNode(this);
         }
 
         /// <summary>

@@ -2,12 +2,12 @@
 {
     public interface IVisitor<T>
     {
-        T visitProgramNode(IASTNode program);
+        T VisitProgramNode(IASTNode program);
 
-        T visitAssigmentNode(IAssigmentASTNode assigment);
+        T VisitAssigmentNode(IAssigmentASTNode assigment);
 
-        T visitIdentifierNode(IIdentifierASTNode identifier);
+        T VisitIdentifierNode(IIdentifierASTNode identifier);
 
-        T visitValueNode(IValueASTNode value);
+        T VisitValueNode(IValueASTNode value);
     }
 }

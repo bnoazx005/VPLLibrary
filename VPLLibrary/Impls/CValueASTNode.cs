@@ -27,7 +27,7 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.visitValueNode(this);
+            return interpreter.VisitValueNode(this);
         }
 
         /// <summary>
