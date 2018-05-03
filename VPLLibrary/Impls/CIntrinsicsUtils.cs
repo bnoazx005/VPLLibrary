@@ -1,7 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace VPLLibrary.Impls
 {
+    /// <summary>
+    /// The enumeration contains all possible types of intrinsic functions, which is built in
+    /// within the language's defenition
+    /// </summary>
+
+    public enum E_INTRINSIC_FUNC_TYPE
+    {
+        IFT_HEAD,
+        IFT_LAST,
+        IFT_SUM,
+        IFT_REVERSE,
+        IFT_SORT,
+        IFT_MIN,
+        IFT_MAX,
+        IFT_CONCAT,
+        IFT_SLICE,
+        IFT_INDEXOF,
+        IFT_GET,
+        IFT_LEN,
+        IFT_MAP,
+        IFT_FILTER,
+        IFT_VECOP
+    }
+
+
     /// <summary>
     /// static class CIntrinsicsUtils
     /// 
@@ -11,6 +37,18 @@ namespace VPLLibrary.Impls
 
     public static class CIntrinsicsUtils
     {
+        public delegate int UnaryLambdaFunction(int x);
+        
+        public delegate int BinaryLambdaFunction(int x, int y);
+
+        public delegate bool LambdaPredicate(int x);
+
+
+        public static int[] Eval(E_INTRINSIC_FUNC_TYPE type, params Object[] args)
+        {
+            throw new NotImplementedException();
+        }
+
         public static int[] GetHead(int[] inputArray)
         {
             if (inputArray == null)
@@ -236,6 +274,88 @@ namespace VPLLibrary.Impls
             }
 
             return new int[] { inputArray.Length };
+        }
+
+        public static int[] Map(int[] inputArray, UnaryLambdaFunction functor)
+        {
+            if (inputArray == null)
+            {
+                throw new CRuntimeError("Memory violation");
+            }
+
+            int arrayLength = inputArray.Length;
+
+            if (arrayLength == 0)
+            {
+                return inputArray;
+            }
+
+            for (int i = 0; i < arrayLength; ++i)
+            {
+                inputArray[i] = functor(inputArray[i]);
+            }
+
+            return inputArray;
+        }
+
+        public static int[] Filter(int[] inputArray, LambdaPredicate functor)
+        {
+            if (inputArray == null)
+            {
+                throw new CRuntimeError("Memory violation");
+            }
+
+            int arrayLength = inputArray.Length;
+
+            if (arrayLength == 0)
+            {
+                return inputArray;
+            }
+
+            List<int> resultArray = new List<int>();
+
+            int currValue = 0;
+
+            for (int i = 0; i < arrayLength; ++i)
+            {
+                currValue = inputArray[i];
+                
+                if (functor(currValue))
+                {
+                    resultArray.Add(currValue);
+                }
+            }
+
+            return resultArray.ToArray();
+        }
+
+        public static int[] VecOp(int[] firstArray, int[] secondArray, BinaryLambdaFunction functor)
+        {
+            if (firstArray == null ||
+                secondArray == null)
+            {
+                throw new CRuntimeError("Memory violation");
+            }
+
+            int firstArrayLength = firstArray.Length;
+            int secondArrayLength = secondArray.Length;
+
+            if (firstArrayLength == 0 ||
+                secondArrayLength == 0)
+            {
+                return new int[0];
+            }
+
+            int resultArrayLength = Math.Min(firstArrayLength, secondArrayLength);
+
+            int[] resultArray = new int[resultArrayLength];
+            
+            for (int i = 0; i < resultArrayLength; ++i)
+            {
+                resultArray[i] = functor(firstArray[i], secondArray[i]);
+            }
+
+            return resultArray;
         }
     }
 }

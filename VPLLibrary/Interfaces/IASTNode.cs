@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using VPLLibrary.Impls;
 
 
 namespace VPLLibrary.Interfaces
@@ -124,31 +125,6 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         int[] Value { get; }
-    }
-
-
-    /// <summary>
-    /// The enumeration contains all possible types of intrinsic functions, which is built in
-    /// within the language's defenition
-    /// </summary>
-
-    public enum E_INTRINSIC_FUNC_TYPE
-    {
-        IFT_HEAD,
-        IFT_LAST,
-        IFT_SUM,
-        IFT_REVERSE,
-        IFT_SORT,
-        IFT_MIN,
-        IFT_MAX,
-        IFT_CONCAT,
-        IFT_SLICE,
-        IFT_INDEXOF,
-        IFT_GET,
-        IFT_LEN,
-        IFT_MAP,
-        IFT_FILTER,
-        IFT_VECOP
     }
 
 
