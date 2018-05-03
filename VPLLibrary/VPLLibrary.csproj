@@ -35,12 +35,12 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impls\CBaseASTNode.cs" />
     <Compile Include="Interfaces\IASTNode.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
+    <Compile Include="Interfaces\IVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
