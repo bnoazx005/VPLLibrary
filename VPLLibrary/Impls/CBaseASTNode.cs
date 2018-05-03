@@ -17,9 +17,9 @@ namespace VPLLibrary.Impls
 
         protected IASTNode    mRightChild;
 
-        public CBaseASTNode()
+        public CBaseASTNode(E_NODE_TYPE type = E_NODE_TYPE.NT_DEFAULT)
         {
-            mType = E_NODE_TYPE.NT_DEFAULT;
+            mType = type;
 
             mLeftChild = mRightChild = null;
         }

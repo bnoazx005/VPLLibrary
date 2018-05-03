@@ -10,7 +10,10 @@ namespace VPLLibrary.Interfaces
     public enum E_NODE_TYPE
     {
         NT_PROGRAM,
+        NT_ASSIGMENT,
+        NT_IDENTIFIER,
         NT_EXPRESSION,
+        NT_VALUE,
         NT_DEFAULT
     }
 
@@ -48,5 +51,61 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IASTNode Right { get; set; }
+    }
+
+
+    /// <summary>
+    /// interface IAssigmentASTNode
+    /// 
+    /// The interface represents an assigment within an AST
+    /// </summary>
+
+    public interface IAssigmentASTNode
+    {
+        /// <summary>
+        /// The readonly property returns an identifier
+        /// </summary>
+
+        string Id { get; }
+
+        /// <summary>
+        /// The readonly property returns an expression
+        /// </summary>
+
+        IASTNode Expression { get; }
+    }
+
+
+
+    /// <summary>
+    /// interface IIdentifierASTNode
+    /// 
+    /// The interface represents an identifier's node within an AST
+    /// </summary>
+
+    public interface IIdentifierASTNode
+    {
+        /// <summary>
+        /// The readonly property returns an identifier
+        /// </summary>
+
+        string Name { get; }
+    }
+
+
+
+    /// <summary>
+    /// interface IValueASTNode
+    /// 
+    /// The interface represents an value's node within an AST
+    /// </summary>
+
+    public interface IValueASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a value
+        /// </summary>
+
+        int[] Value { get; }
     }
 }

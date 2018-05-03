@@ -36,6 +36,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impls\CBaseASTNode.cs" />
+    <Compile Include="Impls\CIdentifierASTNode.cs" />
+    <Compile Include="Impls\CAssignmentASTNode.cs" />
+    <Compile Include="Impls\CProgramASTNode.cs" />
+    <Compile Include="Impls\CValueASTNode.cs" />
     <Compile Include="Interfaces\IASTNode.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
     <Compile Include="Interfaces\IVisitor.cs" />
