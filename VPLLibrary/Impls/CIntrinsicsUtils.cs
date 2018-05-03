@@ -46,7 +46,55 @@ namespace VPLLibrary.Impls
 
         public static int[] Eval(E_INTRINSIC_FUNC_TYPE type, params Object[] args)
         {
-            throw new NotImplementedException();
+            switch (type)
+            {
+                case E_INTRINSIC_FUNC_TYPE.IFT_HEAD:
+                    return GetHead((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_LAST:
+                    return GetLast((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_SUM:
+                    return GetSumOfElements((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_REVERSE:
+                    return Reverse((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_SORT:
+                    return Sort((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_MIN:
+                    return GetMinElement((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_MAX:
+                    return GetMaxElement((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_CONCAT:
+                    return Concat((int[])args[0], (int[])args[1]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_SLICE:
+                    return Slice((int[])args[0], (int[])args[1], (int[])args[2]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_INDEXOF:
+                    return GetIndexOf((int[])args[0], (int[])args[1]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_GET:
+                    return GetElement((int[])args[0], (int[])args[1]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_LEN:
+                    return GetLength((int[])args[0]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_MAP:
+                    return Map((int[])args[0], (UnaryLambdaFunction)args[1]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_FILTER:
+                    return Filter((int[])args[0], (LambdaPredicate)args[1]);
+
+                case E_INTRINSIC_FUNC_TYPE.IFT_VECOP:
+                    return VecOp((int[])args[0], (int[])args[1], (BinaryLambdaFunction)args[2]);
+            }
+
+            return new int[0];
         }
 
         public static int[] GetHead(int[] inputArray)
@@ -216,6 +264,53 @@ namespace VPLLibrary.Impls
 
             Array.Copy(firstArray, resultArray, firstArrayLength);
             Array.Copy(secondArray, 0, resultArray, firstArrayLength, secondArrayLength);
+
+            return resultArray;
+        }
+
+        public static int[] Slice(int[] inputArray, int[] firstIndex, int[] secondIndex)
+        {
+            if (inputArray == null ||
+                firstIndex == null ||
+                firstIndex.Length != 1 ||
+                secondIndex == null ||
+                secondIndex.Length != 1)
+            {
+                throw new CRuntimeError("Memory violation");
+            }
+
+            int inputArrayLength = inputArray.Length;
+
+            if (inputArrayLength == 0)
+            {
+                return new int[0];
+            }
+
+            int firstIndexValue  = firstIndex[0]; 
+            int secondIndexValue = secondIndex[0];
+
+            if (firstIndexValue < 0 || secondIndexValue < 0)
+            {
+                throw new CRuntimeError("An array index couldn't be negative value");
+            }
+
+            if (firstIndexValue >= inputArrayLength || secondIndexValue >= inputArrayLength)
+            {
+                throw new CRuntimeError("An index is out of range");
+            }
+
+            if (firstIndexValue > secondIndexValue)
+            {
+                int temp         = firstIndexValue;
+                firstIndexValue  = secondIndexValue;
+                secondIndexValue = temp;
+            }
+
+            int totalLength = secondIndexValue - firstIndexValue;
+
+            int[] resultArray = new int[totalLength];
+
+            Array.Copy(inputArray, firstIndexValue, resultArray, 0, totalLength);
 
             return resultArray;
         }
