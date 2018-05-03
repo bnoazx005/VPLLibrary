@@ -171,9 +171,13 @@ namespace VPLLibrary.Impls
                 return inputArray;
             }
 
-            Array.Reverse(inputArray);
+            int[] resultArray = new int[arrayLength];
 
-            return inputArray;
+            Array.Copy(inputArray, resultArray, arrayLength);
+
+            Array.Reverse(resultArray);
+
+            return resultArray;
         }
 
         public static int[] GetMinElement(int[] inputArray)
@@ -244,9 +248,13 @@ namespace VPLLibrary.Impls
                 return inputArray;
             }
 
-            Array.Sort(inputArray);
+            int[] resultArray = new int[arrayLength];
 
-            return inputArray;
+            Array.Copy(inputArray, resultArray, arrayLength);
+
+            Array.Sort(resultArray);
+
+            return resultArray;
         }
 
 
