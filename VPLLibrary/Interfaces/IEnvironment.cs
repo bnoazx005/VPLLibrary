@@ -22,7 +22,7 @@
 
         /// <summary>
         /// The method assigns a new value into a specified variable.
-        /// It throws RuntimeError if there is no specified variable within
+        /// It defines a new variable if there is no specified variable within
         /// the environment.
         /// </summary>
         /// <param name="id">An identifier</param>

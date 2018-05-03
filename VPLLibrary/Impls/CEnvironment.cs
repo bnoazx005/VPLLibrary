@@ -23,11 +23,10 @@ namespace VPLLibrary.Impls
         /// <summary>
         /// The method defines a new variable within inner store.
         /// If there is another one variable with the same name,
-        /// the method return false.
+        /// the method throws an exception.
         /// </summary>
         /// <param name="id">An identifier</param>
         /// <param name="value">An initial value</param>
-        /// <returns>Returns false if insertion cannot be completed, true in other cases</returns>
 
         public void Define(string id, int[] value)
         {
@@ -41,18 +40,19 @@ namespace VPLLibrary.Impls
 
         /// <summary>
         /// The method assigns a new value into a specified variable.
-        /// It returns false if there is no specified variable within
+        /// It defines a new variable if there is no specified variable within
         /// the environment.
         /// </summary>
         /// <param name="id">An identifier</param>
         /// <param name="value">A value</param>
-        /// <returns>Returns false if there is no specified variable and true in other cases</returns>
 
         public void Assign(string id, int[] value)
         {
             if (!mHashMap.ContainsKey(id))
             {
-                throw new CRuntimeError(string.Format("Undeclared variable [{0}]", id));
+                Define(id, value);
+
+                return;
             }
 
             mHashMap[id] = value;
