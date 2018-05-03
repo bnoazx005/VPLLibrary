@@ -45,5 +45,13 @@ namespace VPLLibraryTests.Tests
             
             Assert.Throws<CRuntimeError>(() => { env.Get(id); });
         }
+
+        [Test]
+        public void TestGetLastAssignedVariableId_TryToCallMethodOnEmptyEnvironment_ReturnEmptyString()
+        {
+            IEnvironment env = new CEnvironment();
+
+            Assert.IsEmpty(env.GetLastAssignedVariableId());
+        }
     }
 }

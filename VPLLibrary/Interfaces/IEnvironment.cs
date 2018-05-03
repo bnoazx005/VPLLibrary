@@ -41,6 +41,13 @@
         int[] Get(string id);
 
         /// <summary>
+        /// The method returns an identifier of a last assigned variable
+        /// </summary>
+        /// <returns>An identifier of a last assigned variable</returns>
+
+        string GetLastAssignedVariableId();
+
+        /// <summary>
         /// The method returns true if a variable with specified name
         /// exists within the environment.
         /// </summary>

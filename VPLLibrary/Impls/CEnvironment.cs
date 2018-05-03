@@ -15,9 +15,13 @@ namespace VPLLibrary.Impls
     {
         protected IDictionary<string, int[]> mHashMap;
 
+        protected string                     mLastAssignedVariableId;
+
         public CEnvironment()
         {
             mHashMap = new Dictionary<string, int[]>();
+
+            mLastAssignedVariableId = string.Empty;
         }
 
         /// <summary>
@@ -36,6 +40,8 @@ namespace VPLLibrary.Impls
             }
 
             mHashMap.Add(id, value);
+
+            mLastAssignedVariableId = id;
         }
 
         /// <summary>
@@ -51,11 +57,13 @@ namespace VPLLibrary.Impls
             if (!mHashMap.ContainsKey(id))
             {
                 Define(id, value);
-
+                
                 return;
             }
 
             mHashMap[id] = value;
+
+            mLastAssignedVariableId = id;
         }
 
         /// <summary>
@@ -74,6 +82,16 @@ namespace VPLLibrary.Impls
             }
 
             return mHashMap[id];
+        }
+
+        /// <summary>
+        /// The method returns an identifier of a last assigned variable
+        /// </summary>
+        /// <returns>An identifier of a last assigned variable</returns>
+
+        public string GetLastAssignedVariableId()
+        {
+            return mLastAssignedVariableId;
         }
 
         /// <summary>
