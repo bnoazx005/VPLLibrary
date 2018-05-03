@@ -18,9 +18,11 @@ namespace VPLLibrary.Impls
 
         protected E_INTRINSIC_FUNC_TYPE mIntrinsicType;
 
-        public CCallASTNode(IList<IASTNode> arguments) :
+        public CCallASTNode(E_INTRINSIC_FUNC_TYPE type, IList<IASTNode> arguments) :
             base(E_NODE_TYPE.NT_CALL)
         {
+            mIntrinsicType = type;
+
             mArgumentsList = arguments;
         }
 
