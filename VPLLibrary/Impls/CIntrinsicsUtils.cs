@@ -43,6 +43,8 @@ namespace VPLLibrary.Impls
 
         public delegate bool LambdaPredicate(int x);
 
+        public static int[] mNullArray = new int[0];
+
 
         public static int[] Eval(E_INTRINSIC_FUNC_TYPE type, params Object[] args)
         {
@@ -94,7 +96,7 @@ namespace VPLLibrary.Impls
                     return VecOp((int[])args[0], (int[])args[1], (BinaryLambdaFunction)args[2]);
             }
 
-            return new int[0];
+            return mNullArray;
         }
 
         public static int[] GetHead(int[] inputArray)
@@ -283,7 +285,7 @@ namespace VPLLibrary.Impls
 
             if (inputArrayLength == 0)
             {
-                return new int[0];
+                return mNullArray;
             }
 
             int firstIndexValue  = firstIndex[0]; 
@@ -348,7 +350,7 @@ namespace VPLLibrary.Impls
 
             if (arrayLength == 0)
             {
-                return new int[0];
+                return mNullArray;
             }
 
             return new int[] { inputArray[element[0]] };
@@ -438,7 +440,7 @@ namespace VPLLibrary.Impls
             if (firstArrayLength == 0 ||
                 secondArrayLength == 0)
             {
-                return new int[0];
+                return mNullArray;
             }
 
             int resultArrayLength = Math.Min(firstArrayLength, secondArrayLength);
