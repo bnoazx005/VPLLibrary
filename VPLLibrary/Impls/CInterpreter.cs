@@ -15,8 +15,11 @@ namespace VPLLibrary.Impls
 
     public class CInterpreter: IInterpreter, IVisitor<Object>
     {
+        protected IEnvironment mEnvironment;
+
         public CInterpreter()
         {
+            mEnvironment = new CEnvironment();
         }
 
         /// <summary>
@@ -39,6 +42,8 @@ namespace VPLLibrary.Impls
                 throw new ArgumentNullException("inputData", "The argument cannot equal to null");
             }
 
+            mEnvironment.Clear();
+
             return (int[])program.Accept(this);
         }
 
@@ -56,12 +61,48 @@ namespace VPLLibrary.Impls
                 currCommand.Accept(this);
             }
 
-            return null;
+            string lastAssignedVariableId = mEnvironment.GetLastAssignedVariableId();
+
+            // if input program is empty, just return an empty array as a result
+            if (string.IsNullOrEmpty(lastAssignedVariableId))
+            {
+                return new int[0];
+            }
+
+            return mEnvironment.Get(lastAssignedVariableId);
         }
 
         public Object VisitAssigmentNode(IAssigmentASTNode assigment)
         {
-            return null;
+            IASTNode rightOp = assigment.Expression;
+
+            // if right operator is just an identifier or a value, then assign it immediately
+            if (rightOp.Type == E_NODE_TYPE.NT_VALUE)
+            {
+                int[] assignedValue = (rightOp as IValueASTNode).Value;
+
+                mEnvironment.Assign(assigment.Id, assignedValue);
+
+                return assignedValue;
+            }
+
+            if (rightOp.Type == E_NODE_TYPE.NT_IDENTIFIER)
+            {
+                string id = (rightOp as IIdentifierASTNode).Name;
+
+                int[] assignedValue = mEnvironment.Get(id);
+
+                mEnvironment.Assign(assigment.Id, assignedValue);
+
+                return assignedValue;
+            }
+
+            // common case
+            Object value = assigment.Expression.Accept(this);
+
+            mEnvironment.Assign(assigment.Id, (int[])value);
+
+            return value;
         }
 
         public Object VisitIdentifierNode(IIdentifierASTNode identifier)
