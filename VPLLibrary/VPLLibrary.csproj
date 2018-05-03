@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impls\CBaseASTNode.cs" />
+    <Compile Include="Impls\CEnvironment.cs" />
     <Compile Include="Impls\CIdentifierASTNode.cs" />
     <Compile Include="Impls\CAssignmentASTNode.cs" />
     <Compile Include="Impls\CInterpreter.cs" />
@@ -43,6 +44,7 @@
     <Compile Include="Impls\CRuntimeError.cs" />
     <Compile Include="Impls\CValueASTNode.cs" />
     <Compile Include="Interfaces\IASTNode.cs" />
+    <Compile Include="Interfaces\IEnvironment.cs" />
     <Compile Include="Interfaces\IInterpreter.cs" />
     <Compile Include="Interfaces\IVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
