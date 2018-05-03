@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using VPLLibrary.Impls;
 using VPLLibrary.Interfaces;
 
@@ -39,7 +40,7 @@ namespace VPLLibraryTests.Tests
         }
 
         [Test]
-        public void VisitIdentifierNode_NullArgument_ThrowsNullArgumentException()
+        public void TestVisitIdentifierNode_NullArgument_ThrowsNullArgumentException()
         {
             IVisitor<Object> interpreter = new CInterpreter();
 
@@ -47,7 +48,7 @@ namespace VPLLibraryTests.Tests
         }
 
         [Test]
-        public void VisitIdentifierNode_CorrectArgument_ReturnsName()
+        public void TestVisitIdentifierNode_CorrectArgument_ReturnsName()
         {
             IVisitor<Object> interpreter = new CInterpreter();
 
@@ -59,7 +60,7 @@ namespace VPLLibraryTests.Tests
         }
 
         [Test]
-        public void VisitValueNode_NullArgument_ThrowsNullArgumentException()
+        public void TestVisitValueNode_NullArgument_ThrowsNullArgumentException()
         {
             IVisitor<Object> interpreter = new CInterpreter();
 
@@ -67,7 +68,7 @@ namespace VPLLibraryTests.Tests
         }
 
         [Test]
-        public void VisitValueNode_CorrectArgument_ReturnsName()
+        public void TestVisitValueNode_CorrectArgument_ReturnsName()
         {
             IVisitor<Object> interpreter = new CInterpreter();
 
@@ -76,6 +77,76 @@ namespace VPLLibraryTests.Tests
             var result = interpreter.VisitValueNode(valueNode);
 
             Assert.AreEqual(result, valueNode.Value);
+        }
+
+        [Test]
+        public void TestVisitAssigmentNode_SingleAssigmentOfValue_ReturnsValue()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[][] inputData = new int[3][];
+
+            int[] expectedValue = new int[] { 42 };
+
+            // simple program that should assign 42 to a variable t
+            IASTNode program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t", new CValueASTNode(expectedValue))
+            });
+
+            Assert.DoesNotThrow(() => {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result, expectedValue);
+            });
+        }
+
+        [Test]
+        public void TestVisitAssigmentNode_NestedAssigmentOfValue_ReturnsValue()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[][] inputData = new int[3][];
+
+            int[] expectedValue = new int[] { 42 };
+
+            // simple program that should assign 42 to a variable t
+            // now program looks like t <- v <- 42
+            IASTNode program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t",
+                            new CAssignmentASTNode("v", new CValueASTNode(expectedValue)))
+            });
+
+            Assert.DoesNotThrow(() => {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result, expectedValue);
+            });
+        }
+
+        [Test]
+        public void TestVisitAssigmentNode_SequentialAssigmentOfValueViaReference_ReturnsValue()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[][] inputData = new int[3][];
+
+            int[] expectedValue = new int[] { 42 };
+
+            // simple program that should assign 42 to a variable t
+            // now program looks like t <- 42 \n v <- t
+            IASTNode program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t", new CValueASTNode(expectedValue)),
+                new CAssignmentASTNode("v", new CIdentifierASTNode("t"))
+            });
+
+            Assert.DoesNotThrow(() => {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result, expectedValue);
+            });
         }
     }
 }
