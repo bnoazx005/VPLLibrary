@@ -134,7 +134,7 @@ namespace VPLLibrary.Impls
 
             IList<IASTNode> argsList = call.Args;
 
-            IList<Object> evaluatedArgsList = new List<Object>();
+            List<Object> evaluatedArgsList = new List<Object>();
 
             foreach(IASTNode arg in argsList)
             {
@@ -143,10 +143,17 @@ namespace VPLLibrary.Impls
                     throw new ArgumentNullException("arg", "The argument cannot equal to null");
                 }
 
+                if (arg.Type == E_NODE_TYPE.NT_IDENTIFIER)
+                {
+                    evaluatedArgsList.Add(mEnvironment.Get((arg as IIdentifierASTNode).Name));
+
+                    continue;
+                }
+
                 evaluatedArgsList.Add(arg.Accept(this));
             }
 
-            return CIntrinsicsUtils.Eval(call.IntrinsicType, evaluatedArgsList);
+            return CIntrinsicsUtils.Eval(call.IntrinsicType, evaluatedArgsList.ToArray());
         }
     }
 }

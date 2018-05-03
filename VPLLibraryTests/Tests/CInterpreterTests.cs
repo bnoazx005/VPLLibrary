@@ -148,5 +148,47 @@ namespace VPLLibraryTests.Tests
                 Assert.AreEqual(result, expectedValue);
             });
         }
+
+        [Test]
+        public void TestVisitCallNode_SimpleProgram_ReturnsValue()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[][] inputData = new int[3][];
+
+            int[] testArray = new int[] { 5, 4, -3, 1 };
+
+            int sum = 0;
+
+            foreach (int unit in testArray)
+            {
+                sum += unit;
+            }
+
+            int[] expectedValue = new int[] { testArray[0], sum };
+
+            // simple program that returns a sum of length and a first element of an array
+            // program's code looks like this 
+            // a <- [5, 4, -3, 1]
+            // t <- head a
+            // s <- sum a
+            // r <- concat t s
+            IASTNode program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("a", new CValueASTNode(testArray)),
+                new CAssignmentASTNode("t", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_HEAD, new List<IASTNode>() { new CIdentifierASTNode("a") })),
+                new CAssignmentASTNode("s", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_SUM, new List<IASTNode>() { new CIdentifierASTNode("a") })),
+                new CAssignmentASTNode("r", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_CONCAT, new List<IASTNode>() { new CIdentifierASTNode("t"), new CIdentifierASTNode("s") }))
+            });
+
+            Assert.DoesNotThrow(() => {
+                var result = interpreter.Eval(program, inputData);
+
+                for (int i = 0; i < result.Length; ++i)
+                {
+                    Assert.AreEqual(expectedValue[i], result[i]);
+                }
+            });
+        }
     }
 }
