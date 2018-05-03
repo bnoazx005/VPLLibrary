@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using VPLLibrary.Interfaces;
 
 
@@ -154,6 +155,41 @@ namespace VPLLibrary.Impls
             }
 
             return CIntrinsicsUtils.Eval(call.IntrinsicType, evaluatedArgsList.ToArray());
+        }
+
+        public Object VisitBinaryLambdaFuncNode(IBinaryLambdaFuncASTNode binaryLambdaFunc)
+        {
+            ParameterExpression x = Expression.Parameter(typeof(int), "x");
+            ParameterExpression y = Expression.Parameter(typeof(int), "y");
+
+            Expression lambdaBody = null;
+
+            switch (binaryLambdaFunc.OpType)
+            {
+                case E_OPERATION_TYPE.OT_ADD:
+                    lambdaBody = Expression.Add(x, y);
+                    break;
+                case E_OPERATION_TYPE.OT_SUB:
+                    lambdaBody = Expression.Subtract(x, y);
+                    break;
+                case E_OPERATION_TYPE.OT_MUL:
+                    lambdaBody = Expression.Multiply(x, y);
+                    break;
+                case E_OPERATION_TYPE.OT_DIV:
+                    lambdaBody = Expression.Divide(x, y);
+                    break;
+                case E_OPERATION_TYPE.OT_MOD:
+                    lambdaBody = Expression.Modulo(x, y);
+                    break;
+                //case E_OPERATION_TYPE.OT_POW:
+                //    lambdaBody = Expression.Power(x, y);
+                //    break;
+                default:
+                    lambdaBody = Expression.Empty();
+                    break;
+            }
+
+            return Expression.Lambda(lambdaBody, x, y).Compile();
         }
     }
 }

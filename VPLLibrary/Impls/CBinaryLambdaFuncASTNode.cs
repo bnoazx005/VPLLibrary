@@ -31,7 +31,7 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.VisitBinaryLambdaFunc(this);
+            return interpreter.VisitBinaryLambdaFuncNode(this);
         }
 
         /// <summary>

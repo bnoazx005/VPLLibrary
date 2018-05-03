@@ -11,5 +11,7 @@
         T VisitValueNode(IValueASTNode value);
 
         T VisitCallNode(ICallASTNode call);
+
+        T VisitBinaryLambdaFuncNode(IBinaryLambdaFuncASTNode binaryLambdaFunc);
     }
 }

@@ -190,5 +190,24 @@ namespace VPLLibraryTests.Tests
                 }
             });
         }
+
+        [TestCase(E_OPERATION_TYPE.OT_ADD, 2, 2, 4)]
+        [TestCase(E_OPERATION_TYPE.OT_SUB, 2, 2, 0)]
+        [TestCase(E_OPERATION_TYPE.OT_MUL, 25, 2, 50)]
+        [TestCase(E_OPERATION_TYPE.OT_DIV, 50, 2, 25)]
+        [TestCase(E_OPERATION_TYPE.OT_MOD, 25, 2, 1)]
+        //[TestCase(E_OPERATION_TYPE.OT_POW, 3, 2, 9)] works only for double, need to find some trick to implement it
+        public void TestVisitBinaryLambdaFuncNode_CheckLambdaFunctorGeneration_ReturnsLambdaFunctor(E_OPERATION_TYPE type, int x, int y, int res)
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Func<int, int, int> lambdaFunctor = null;
+
+            Assert.DoesNotThrow(() => {
+                lambdaFunctor = (Func<int, int, int>)interpreter.VisitBinaryLambdaFuncNode(new CBinaryLambdaFuncASTNode(type));                
+            });
+
+            Assert.AreEqual(lambdaFunctor(x, y), res);
+        }
     }
 }
