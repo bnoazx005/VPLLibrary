@@ -124,5 +124,15 @@ namespace VPLLibrary.Impls
 
             return value.Value;
         }
+
+        public Object VisitCallNode(ICallASTNode call)
+        {
+            if (call == null)
+            {
+                throw new ArgumentNullException("call", "The argument cannot equal to null");
+            }
+            
+            return null;
+        }
     }
 }

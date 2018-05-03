@@ -9,5 +9,7 @@
         T VisitIdentifierNode(IIdentifierASTNode identifier);
 
         T VisitValueNode(IValueASTNode value);
+
+        T VisitCallNode(ICallASTNode call);
     }
 }
