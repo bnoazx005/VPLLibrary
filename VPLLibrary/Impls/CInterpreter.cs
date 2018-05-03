@@ -191,5 +191,41 @@ namespace VPLLibrary.Impls
 
             return Expression.Lambda(lambdaBody, x, y).Compile();
         }
+
+        public Object VisitLambdaPredicateNode(ILambdaPredicateASTNode lambdaPredicate)
+        {
+            ParameterExpression x = Expression.Parameter(typeof(int), "x");
+
+            Expression value = Expression.Constant(lambdaPredicate.FirstOperand.Value[0]);
+
+            Expression lambdaBody = Expression.Empty();
+
+            switch (lambdaPredicate.LOPType)
+            {
+                case E_LOGIC_OP_TYPE.LOT_EQ:
+                    lambdaBody = Expression.Equal(value, x);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_NEQ:
+                    lambdaBody = Expression.NotEqual(value, x);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_LT:
+                    lambdaBody = Expression.LessThan(x, value);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_LE:
+                    lambdaBody = Expression.LessThanOrEqual(x, value);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_GT:
+                    lambdaBody = Expression.GreaterThan(x, value);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_GE:
+                    lambdaBody = Expression.GreaterThanOrEqual(x, value);
+                    break;
+                case E_LOGIC_OP_TYPE.LOT_MOD:
+                    lambdaBody = Expression.Equal(Expression.Modulo(x, value), Expression.Constant(lambdaPredicate.SecondOperand.Value[0]));
+                    break;
+            }
+
+            return Expression.Lambda(lambdaBody, x).Compile();
+        }
     }
 }

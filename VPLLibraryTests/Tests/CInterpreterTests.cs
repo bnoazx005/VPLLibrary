@@ -207,7 +207,47 @@ namespace VPLLibraryTests.Tests
                 lambdaFunctor = (Func<int, int, int>)interpreter.VisitBinaryLambdaFuncNode(new CBinaryLambdaFuncASTNode(type));                
             });
 
-            Assert.AreEqual(lambdaFunctor(x, y), res);
+            Assert.AreEqual(res, lambdaFunctor(x, y));
+        }
+
+        [TestCase(E_LOGIC_OP_TYPE.LOT_EQ, 2, 2, true)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_EQ, 2, 4, false)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_NEQ, 2, 2, false)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_NEQ, 2, 4, true)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_LE, 2, 2, true)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_LE, 4, 2, false)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_LT, 2, 4, true)]
+        [TestCase(E_LOGIC_OP_TYPE.LOT_LT, 4, 2, false)]
+        public void TestVisitLambdaPredicateNode_CheckLambdaPredicateGeneration_ReturnsLambdaPredicate(E_LOGIC_OP_TYPE type, int x, int value, bool res)
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Func<int, bool> lambdaPredicate = null;
+
+            Assert.DoesNotThrow(() => {
+                lambdaPredicate = (Func<int, bool>)interpreter.VisitLambdaPredicateNode(
+                                                new CLambdaPredicateASTNode(type, new CValueASTNode(new int[] { value }), null));
+            });
+
+            Assert.AreEqual(res, lambdaPredicate(x));
+        }
+
+        [TestCase(4, 2, 1, false)]
+        [TestCase(7, 2, 0, false)]
+        [TestCase(7, 2, 1, true)]
+        public void TestVisitLambdaPredicateNode_CheckModuloComparisonLambdaPredicate_ReturnsLambdaPredicate(int x, int value, int secondOp, bool res)
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Func<int, bool> lambdaPredicate = null;
+
+            Assert.DoesNotThrow(() => {
+                lambdaPredicate = (Func<int, bool>)interpreter.VisitLambdaPredicateNode(
+                                                new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_MOD, new CValueASTNode(new int[] { value }), 
+                                                            new CValueASTNode(new int[] { secondOp })));
+            });
+
+            Assert.AreEqual(res, lambdaPredicate(x));
         }
     }
 }

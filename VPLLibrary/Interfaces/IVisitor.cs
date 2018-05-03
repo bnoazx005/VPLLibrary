@@ -13,5 +13,7 @@
         T VisitCallNode(ICallASTNode call);
 
         T VisitBinaryLambdaFuncNode(IBinaryLambdaFuncASTNode binaryLambdaFunc);
+
+        T VisitLambdaPredicateNode(ILambdaPredicateASTNode lambdaPredicate);
     }
 }

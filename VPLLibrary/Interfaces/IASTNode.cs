@@ -48,7 +48,8 @@ namespace VPLLibrary.Interfaces
         LOT_GT,         // >
         LOT_GE,         // >=
         LOT_EQ,         // ==
-        LOT_NEQ         // !=
+        LOT_NEQ,        // !=
+        LOT_MOD         // % (modulo comparison)
     }
 
 
@@ -214,5 +215,17 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         E_LOGIC_OP_TYPE LOPType { get; }
+
+        /// <summary>
+        /// The readonly property returns a value of first operand
+        /// </summary>
+
+        IValueASTNode FirstOperand { get; }
+
+        /// <summary>
+        /// The readonly property returns a value of second operand
+        /// </summary>
+
+        IValueASTNode SecondOperand { get; }
     }
 }
