@@ -88,5 +88,14 @@ namespace VPLLibrary.Impls
         {
             return mHashMap.ContainsKey(id);
         }
+
+        /// <summary>
+        /// The method cleans up all data stored within the environment
+        /// </summary>
+
+        public void Clear()
+        {
+            mHashMap.Clear();
+        }
     }
 }

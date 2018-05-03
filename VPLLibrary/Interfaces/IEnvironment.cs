@@ -49,5 +49,11 @@
         /// exists within the environment.</returns>
 
         bool Exists(string id);
+
+        /// <summary>
+        /// The method cleans up all data stored within the environment
+        /// </summary>
+
+        void Clear();
     }
 }
