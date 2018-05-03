@@ -14,6 +14,7 @@ namespace VPLLibrary.Interfaces
         NT_IDENTIFIER,
         NT_EXPRESSION,
         NT_VALUE,
+        NT_CALL,
         NT_DEFAULT
     }
 
@@ -123,5 +124,53 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         int[] Value { get; }
+    }
+
+
+    /// <summary>
+    /// The enumeration contains all possible types of intrinsic functions, which is built in
+    /// within the language's defenition
+    /// </summary>
+
+    public enum E_INTRINSIC_FUNC_TYPE
+    {
+        IFT_HEAD,
+        IFT_LAST,
+        IFT_SUM,
+        IFT_REVERSE,
+        IFT_SORT,
+        IFT_MIN,
+        IFT_MAX,
+        IFT_CONCAT,
+        IFT_SLICE,
+        IFT_INDEXOF,
+        IFT_GET,
+        IFT_LEN,
+        IFT_MAP,
+        IFT_FILTER,
+        IFT_VECOP
+    }
+
+
+    /// <summary
+    /// interface ICallASTNode
+    /// 
+    /// The interface represents a intrinsic function's call within an AST
+    /// </summary>
+    /// 
+
+    public interface ICallASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a name of a function
+        /// </summary>
+
+        E_INTRINSIC_FUNC_TYPE IntrinsicType { get; }
+
+        /// <summary>
+        /// The readonly property returns arguments of a function
+        /// </summary>
+
+        IList<IASTNode> Args { get; }
     }
 }

@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impls\CBaseASTNode.cs" />
+    <Compile Include="Impls\CCallASTNode.cs" />
     <Compile Include="Impls\CEnvironment.cs" />
     <Compile Include="Impls\CIdentifierASTNode.cs" />
     <Compile Include="Impls\CAssignmentASTNode.cs" />
