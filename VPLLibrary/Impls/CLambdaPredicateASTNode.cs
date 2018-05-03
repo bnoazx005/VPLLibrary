@@ -4,20 +4,21 @@
 namespace VPLLibrary.Impls
 {
     /// <summary>
-    /// class CBinaryLambdaFuncASTNode
+    /// class CLambdaPredicateASTNode
     /// 
     /// The class represents the following BNF rule
-    /// binary-lambda-func ::= ( op )
+    /// lambda-predicate ::= ( lop integer) | 
+    /// (% integer == 1) | (% integer == 0)
     /// </summary>
 
-    public class CBinaryLambdaFuncASTNode : CBaseASTNode, IBinaryLambdaFuncASTNode
+    public class CLambdaPredicateASTNode : CBaseASTNode, ILambdaPredicateASTNode
     {
-        protected E_OPERATION_TYPE mOpType;
+        protected E_LOGIC_OP_TYPE mLogicOpType;
 
-        public CBinaryLambdaFuncASTNode(E_OPERATION_TYPE type) :
-            base(E_NODE_TYPE.NT_BINARY_LAMBDA_FUNC)
+        public CLambdaPredicateASTNode(E_LOGIC_OP_TYPE type) :
+            base(E_NODE_TYPE.NT_LAMBDA_PREDICATE)
         {
-            mOpType = type;
+            mLogicOpType = type;
         }
 
         /// <summary>
@@ -28,19 +29,19 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.VisitBinaryLambdaFuncNode(this);
+            return interpreter.VisitLambdaPredicateNode(this);
         }
 
         /// <summary>
-        /// The readonly property returns a type of mathematical operation
+        /// The readonly property returns a type of boolean operation
         /// that the lambda executes
         /// </summary>
 
-        public E_OPERATION_TYPE OpType
+        public E_LOGIC_OP_TYPE LOPType
         {
             get
             {
-                return mOpType;
+                return mLogicOpType;
             }
         }
     }

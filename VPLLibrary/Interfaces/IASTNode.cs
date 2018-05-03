@@ -17,6 +17,7 @@ namespace VPLLibrary.Interfaces
         NT_VALUE,
         NT_CALL,
         NT_BINARY_LAMBDA_FUNC,
+        NT_LAMBDA_PREDICATE,
         NT_DEFAULT
     }
 
@@ -33,6 +34,21 @@ namespace VPLLibrary.Interfaces
         OT_DIV,
         OT_MOD,
         OT_POW,
+    }
+
+
+    /// <summary>
+    /// The enumeration contains all possible comparison operations
+    /// </summary>
+
+    public enum E_LOGIC_OP_TYPE
+    {
+        LOT_LT,         // <
+        LOT_LE,         // <=
+        LOT_GT,         // >
+        LOT_GE,         // >=
+        LOT_EQ,         // ==
+        LOT_NEQ         // !=
     }
 
 
@@ -181,5 +197,22 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         E_OPERATION_TYPE OpType { get; }
+    }
+
+
+    /// <summary>
+    /// interface ILambdaPredicateASTNode
+    /// 
+    /// The interface represents a lambda predicate within an AST
+    /// </summary>
+
+    public interface ILambdaPredicateASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a type of boolean operation
+        /// that the lambda executes
+        /// </summary>
+
+        E_LOGIC_OP_TYPE LOPType { get; }
     }
 }
