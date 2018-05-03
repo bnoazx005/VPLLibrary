@@ -131,8 +131,22 @@ namespace VPLLibrary.Impls
             {
                 throw new ArgumentNullException("call", "The argument cannot equal to null");
             }
-            
-            return null;
+
+            IList<IASTNode> argsList = call.Args;
+
+            IList<Object> evaluatedArgsList = new List<Object>();
+
+            foreach(IASTNode arg in argsList)
+            {
+                if (arg == null)
+                {
+                    throw new ArgumentNullException("arg", "The argument cannot equal to null");
+                }
+
+                evaluatedArgsList.Add(arg.Accept(this));
+            }
+
+            return CIntrinsicsUtils.Eval(call.IntrinsicType, evaluatedArgsList);
         }
     }
 }
