@@ -37,12 +37,6 @@ namespace VPLLibrary.Impls
 
     public static class CIntrinsicsUtils
     {
-        public delegate int UnaryLambdaFunction(int x);
-        
-        public delegate int BinaryLambdaFunction(int x, int y);
-
-        public delegate bool LambdaPredicate(int x);
-
         public static int[] mNullArray = new int[0];
 
 
@@ -87,13 +81,13 @@ namespace VPLLibrary.Impls
                     return GetLength((int[])args[0]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_MAP:
-                    return Map((int[])args[0], (UnaryLambdaFunction)args[1]);
+                    return Map((int[])args[0], (Func<int, int>)args[1]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_FILTER:
-                    return Filter((int[])args[0], (LambdaPredicate)args[1]);
+                    return Filter((int[])args[0], (Predicate<int>)args[1]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_VECOP:
-                    return VecOp((int[])args[0], (int[])args[1], (BinaryLambdaFunction)args[2]);
+                    return VecOp((int[])args[0], (int[])args[1], (Func<int, int, int>)args[2]);
             }
 
             return mNullArray;
@@ -381,7 +375,7 @@ namespace VPLLibrary.Impls
             return new int[] { inputArray.Length };
         }
 
-        public static int[] Map(int[] inputArray, UnaryLambdaFunction functor)
+        public static int[] Map(int[] inputArray, Func<int, int> functor)
         {
             if (inputArray == null)
             {
@@ -403,7 +397,7 @@ namespace VPLLibrary.Impls
             return inputArray;
         }
 
-        public static int[] Filter(int[] inputArray, LambdaPredicate functor)
+        public static int[] Filter(int[] inputArray, Predicate<int> functor)
         {
             if (inputArray == null)
             {
@@ -434,7 +428,7 @@ namespace VPLLibrary.Impls
             return resultArray.ToArray();
         }
 
-        public static int[] VecOp(int[] firstArray, int[] secondArray, BinaryLambdaFunction functor)
+        public static int[] VecOp(int[] firstArray, int[] secondArray, Func<int, int, int> functor)
         {
             if (firstArray == null ||
                 secondArray == null)
