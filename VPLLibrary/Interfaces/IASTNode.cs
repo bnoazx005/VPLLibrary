@@ -20,6 +20,8 @@ namespace VPLLibrary.Interfaces
         NT_LAMBDA_PREDICATE,
         NT_UNARY_LAMBDA_FUNC,
         NT_IF_THEN_ELSE,
+        NT_READ_INT,
+        NT_READ_INT_ARRAY,
         NT_DEFAULT
     }
 
@@ -286,5 +288,16 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IASTNode ElseBranch { get; }
+    }
+
+
+    /// <summary>
+    /// interface IReadInputASTNode
+    /// 
+    /// The interface represents read input command within an AST
+    /// </summary>
+
+    public interface IReadInputASTNode
+    {
     }
 }
