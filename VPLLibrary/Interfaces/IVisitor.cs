@@ -17,5 +17,7 @@
         T VisitLambdaPredicateNode(ILambdaPredicateASTNode lambdaPredicate);
 
         T VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc);
+
+        T VisitIfThenElseNode(IIfThenElseASTNode ifStatementNode);
     }
 }

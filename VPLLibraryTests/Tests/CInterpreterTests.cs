@@ -287,5 +287,69 @@ namespace VPLLibraryTests.Tests
 
             Assert.AreEqual(expectedLambdaFunctor(inputParameter), lambdaFunctor(inputParameter));
         }
+
+        [Test]
+        public void TestIfStatement_TrueCondition_ReturnsEvaluatedExpressionOfChosenBranch()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[] testValue = new int[] { 5 };
+
+            /*program looks like
+             * t <- 5
+             * r <- if t (== 5) then 5 else -1
+            */
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t", new CValueASTNode(testValue)),
+                new CAssignmentASTNode("r", new CIfThenElseASTNode(new CIdentifierASTNode("t"), 
+                                new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_EQ, new CValueASTNode(testValue), null),
+                                new CValueASTNode(testValue),
+                                new CValueASTNode(new int[] {-1 })))
+            });
+
+            int[][] inputData = new int[3][];
+
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result.Length, 1);
+                Assert.AreEqual(result[0], testValue[0]);
+            });
+        }
+
+        [Test]
+        public void TestIfStatement_FalseCondition_ReturnsEvaluatedExpressionOfChosenBranch()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[] testValue = new int[] { 5 };
+
+            /*program looks like
+             * t <- 5
+             * r <- if t (!= 5) then 5 else -1
+            */
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t", new CValueASTNode(testValue)),
+                new CAssignmentASTNode("r", new CIfThenElseASTNode(new CIdentifierASTNode("t"),
+                                                new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_NEQ, new CValueASTNode(testValue), null),
+                                                new CValueASTNode(testValue),
+                                                new CValueASTNode(new int[] {-1 })))
+            });
+
+            int[][] inputData = new int[3][];
+
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result.Length, 1);
+                Assert.AreEqual(result[0], -1);
+            });
+        }
     }
 }

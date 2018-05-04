@@ -14,12 +14,12 @@ namespace VPLLibrary.Impls
 
         protected ILambdaPredicateASTNode mPredicate;
 
-        protected IList<IASTNode>         mThenBranch;
+        protected IASTNode                mThenBranch;
 
-        protected IList<IASTNode>         mElseBranch;
+        protected IASTNode                mElseBranch;
 
         public CIfThenElseASTNode(IIdentifierASTNode var, ILambdaPredicateASTNode pred, 
-                                  IList<IASTNode> thenBranch, IList<IASTNode> elseBranch):
+                                  IASTNode thenBranch, IASTNode elseBranch):
             base(E_NODE_TYPE.NT_IF_THEN_ELSE)
         {
             mVariable = var;
@@ -70,7 +70,7 @@ namespace VPLLibrary.Impls
         /// The readonly property returns a node that will be executed if a predicate returns true
         /// </summary>
 
-        public IList<IASTNode> ThenBranch
+        public IASTNode ThenBranch
         {
             get
             {
@@ -82,7 +82,7 @@ namespace VPLLibrary.Impls
         /// The readonly property returns a node that will be executed if a predicate returns false
         /// </summary>
 
-        public IList<IASTNode> ElseBranch
+        public IASTNode ElseBranch
         {
             get
             {

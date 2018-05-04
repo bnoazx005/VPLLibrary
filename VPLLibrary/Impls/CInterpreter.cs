@@ -233,6 +233,47 @@ namespace VPLLibrary.Impls
             return Expression.Lambda(lambdaBody.Reduce(), x).Compile();
         }
 
+        public Object VisitIfThenElseNode(IIfThenElseASTNode ifStatementNode)
+        {
+            if (ifStatementNode == null)
+            {
+                throw new ArgumentNullException("ifStatementNode", "The argument cannot equal to null");
+            }
+
+            if (ifStatementNode.Variable == null)
+            {
+                throw new ArgumentNullException("ifStatementNode.Variable", "The argument cannot equal to null");
+            }
+
+            if (ifStatementNode.Predicate == null)
+            {
+                throw new ArgumentNullException("ifStatementNode.Predicate", "The argument cannot equal to null");
+            }
+
+            Func<int, bool> predicate = (Func<int, bool>)(ifStatementNode.Predicate as IASTNode).Accept(this);
+
+            int[] evaluatedExpr = mEnvironment.Get((string)(ifStatementNode.Variable as IASTNode).Accept(this));
+            
+            bool conditionResult = evaluatedExpr.Length >= 1 ? predicate(evaluatedExpr[0]) : false;
+
+            if (conditionResult)
+            {
+                if (ifStatementNode.ThenBranch == null)
+                {
+                    throw new ArgumentNullException("ifStatementNode.ThenBranch", "The argument cannot equal to null");
+                }
+
+                return ifStatementNode.ThenBranch.Accept(this);
+            }
+
+            if (ifStatementNode.ElseBranch == null)
+            {
+                throw new ArgumentNullException("ifStatementNode.ElseBranch", "The argument cannot equal to null");
+            }
+
+            return ifStatementNode.ElseBranch.Accept(this);
+        }
+
         protected Object _visitUnaryLambdaFuncHelper(IASTNode node, Expression parameter)
         {
             if (node.Type == E_NODE_TYPE.NT_VALUE)

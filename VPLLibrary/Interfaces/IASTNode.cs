@@ -279,12 +279,12 @@ namespace VPLLibrary.Interfaces
         /// The readonly property returns a node that will be executed if a predicate returns true
         /// </summary>
 
-        IList<IASTNode> ThenBranch { get; }
+        IASTNode ThenBranch { get; }
 
         /// <summary>
         /// The readonly property returns a node that will be executed if a predicate returns false
         /// </summary>
 
-        IList<IASTNode> ElseBranch { get; }
+        IASTNode ElseBranch { get; }
     }
 }
