@@ -18,6 +18,10 @@ namespace VPLLibrary.Impls
     {
         protected IEnvironment mEnvironment;
 
+        protected int[][]      mInputData;
+
+        protected int          mCurrReadDataIndex;
+
         public CInterpreter()
         {
             mEnvironment = new CEnvironment();
@@ -42,6 +46,10 @@ namespace VPLLibrary.Impls
             {
                 throw new ArgumentNullException("inputData", "The argument cannot equal to null");
             }
+
+            mInputData = inputData;
+
+            mCurrReadDataIndex = 0;
 
             mEnvironment.Clear();
 
@@ -272,6 +280,28 @@ namespace VPLLibrary.Impls
             }
 
             return ifStatementNode.ElseBranch.Accept(this);
+        }
+
+        public Object VisitReadInputNode(IReadInputASTNode readNode)
+        {
+            if (readNode == null)
+            {
+                throw new ArgumentNullException("readNode", "The argument cannot equal to null");
+            }            
+
+            if (mInputData == null)
+            {
+                throw new CRuntimeError("The data pointer is out of range");
+            }
+
+            if (mCurrReadDataIndex >= mInputData.Length)
+            {
+                return CIntrinsicsUtils.mNullArray;
+            }
+
+            int[] input = mInputData[mCurrReadDataIndex++];
+
+            return input ?? CIntrinsicsUtils.mNullArray;
         }
 
         protected Object _visitUnaryLambdaFuncHelper(IASTNode node, Expression parameter)

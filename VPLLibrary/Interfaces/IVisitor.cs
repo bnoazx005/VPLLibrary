@@ -19,5 +19,7 @@
         T VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc);
 
         T VisitIfThenElseNode(IIfThenElseASTNode ifStatementNode);
+
+        T VisitReadInputNode(IReadInputASTNode readNode);
     }
 }

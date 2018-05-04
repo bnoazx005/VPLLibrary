@@ -351,5 +351,30 @@ namespace VPLLibraryTests.Tests
                 Assert.AreEqual(result[0], -1);
             });
         }
+
+        [Test]
+        public void TestReadInput_TryReadEmptyInputArray_ReturnsEmptyArray()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            int[] testValue = new int[] { 5 };
+
+            /*program looks like
+             * t <- [int]
+            */
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("t", new CReadInputASTNode(true))
+            });
+
+            int[][] inputData = new int[1][];
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result, CIntrinsicsUtils.mNullArray);
+            });
+        }
     }
 }
