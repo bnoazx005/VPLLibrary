@@ -84,7 +84,7 @@ namespace VPLLibrary.Impls
                     return Map((int[])args[0], (Func<int, int>)args[1]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_FILTER:
-                    return Filter((int[])args[0], (Predicate<int>)args[1]);
+                    return Filter((int[])args[0], (Func<int, bool>)args[1]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_VECOP:
                     return VecOp((int[])args[0], (int[])args[1], (Func<int, int, int>)args[2]);
@@ -397,7 +397,7 @@ namespace VPLLibrary.Impls
             return inputArray;
         }
 
-        public static int[] Filter(int[] inputArray, Predicate<int> functor)
+        public static int[] Filter(int[] inputArray, Func<int, bool> functor)
         {
             if (inputArray == null)
             {
