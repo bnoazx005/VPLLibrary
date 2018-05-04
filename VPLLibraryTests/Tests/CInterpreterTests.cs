@@ -378,5 +378,44 @@ namespace VPLLibraryTests.Tests
                 Assert.AreEqual(result, CIntrinsicsUtils.mNullArray);
             });
         }
+        
+        [Test]
+        public void TestEval_SimpleProgramWithInputAndIntrinsics_ReturnsResult()
+        {
+            IInterpreter interpreter = new CInterpreter();
+            
+            /*program looks like
+             * x <- [int]
+             * y <- [int]
+             * z <- VecOp (+) x y
+            */
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("y", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("z", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_VECOP, 
+                                                new List<IASTNode>()
+                                                {
+                                                    new CBinaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_ADD),
+                                                    new CIdentifierASTNode("x"),
+                                                    new CIdentifierASTNode("y")
+                                                }))
+            });
+
+            int[][] inputData = new int[][]
+            {
+                new int[] { 4, 4, 4, 4 }, //x
+                new int[] { 2, 2, 2, 2 }  //y
+            };
+
+            int[] expectedResult = new int[] { 2, 2, 2, 2 };
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreSame(expectedResult, result);
+            });
+        }
     }
 }
