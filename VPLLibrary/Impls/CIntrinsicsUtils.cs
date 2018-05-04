@@ -81,13 +81,13 @@ namespace VPLLibrary.Impls
                     return GetLength((int[])args[0]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_MAP:
-                    return Map((int[])args[0], (Func<int, int>)args[1]);
+                    return Map((int[])args[1], (Func<int, int>)args[0]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_FILTER:
-                    return Filter((int[])args[0], (Func<int, bool>)args[1]);
+                    return Filter((int[])args[1], (Func<int, bool>)args[0]);
 
                 case E_INTRINSIC_FUNC_TYPE.IFT_VECOP:
-                    return VecOp((int[])args[0], (int[])args[1], (Func<int, int, int>)args[2]);
+                    return VecOp((int[])args[1], (int[])args[2], (Func<int, int, int>)args[0]);
             }
 
             return mNullArray;

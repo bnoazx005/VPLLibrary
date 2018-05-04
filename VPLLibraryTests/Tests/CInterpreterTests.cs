@@ -387,7 +387,7 @@ namespace VPLLibraryTests.Tests
             /*program looks like
              * x <- [int]
              * y <- [int]
-             * z <- VecOp (+) x y
+             * z <- VecOp (-) x y
             */
             var program = new CProgramASTNode(new List<IASTNode>()
             {
@@ -396,7 +396,7 @@ namespace VPLLibraryTests.Tests
                 new CAssignmentASTNode("z", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_VECOP, 
                                                 new List<IASTNode>()
                                                 {
-                                                    new CBinaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_ADD),
+                                                    new CBinaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_SUB),
                                                     new CIdentifierASTNode("x"),
                                                     new CIdentifierASTNode("y")
                                                 }))
@@ -414,7 +414,10 @@ namespace VPLLibraryTests.Tests
             {
                 var result = interpreter.Eval(program, inputData);
 
-                Assert.AreSame(expectedResult, result);
+                for (int i = 0; i < Math.Min(result.Length, expectedResult.Length); ++i)
+                {
+                    Assert.AreEqual(expectedResult[i], result[i]);
+                }
             });
         }
     }
