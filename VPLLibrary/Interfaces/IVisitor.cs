@@ -15,5 +15,7 @@
         T VisitBinaryLambdaFuncNode(IBinaryLambdaFuncASTNode binaryLambdaFunc);
 
         T VisitLambdaPredicateNode(ILambdaPredicateASTNode lambdaPredicate);
+
+        T VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc);
     }
 }

@@ -46,6 +46,7 @@
     <Compile Include="Impls\CLambdaPredicateASTNode.cs" />
     <Compile Include="Impls\CProgramASTNode.cs" />
     <Compile Include="Impls\CRuntimeError.cs" />
+    <Compile Include="Impls\CUnaryLambdaFuncASTNode.cs" />
     <Compile Include="Impls\CValueASTNode.cs" />
     <Compile Include="Interfaces\IASTNode.cs" />
     <Compile Include="Interfaces\IEnvironment.cs" />

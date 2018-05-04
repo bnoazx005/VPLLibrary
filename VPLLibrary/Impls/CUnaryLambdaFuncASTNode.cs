@@ -33,7 +33,7 @@ namespace VPLLibrary.Impls
 
         public override T Accept<T>(IVisitor<T> interpreter)
         {
-            return interpreter.VisitUnaryLmabdaFuncNode(this);
+            return interpreter.VisitUnaryLambdaFuncNode(this);
         }
 
         /// <summary>

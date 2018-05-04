@@ -249,5 +249,43 @@ namespace VPLLibraryTests.Tests
 
             Assert.AreEqual(res, lambdaPredicate(x));
         }
+
+        [TestCase(E_OPERATION_TYPE.OT_ADD, 2, 4, 6)]
+        [TestCase(E_OPERATION_TYPE.OT_MUL, 2, 4, 8)]
+        public void TestVisitUnaryLambdaFuncNode_CheckSimpleLambdaPredicateGeneration_ReturnsLambdaPredicate(E_OPERATION_TYPE type, int x, int value, int res)
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Func<int, int> lambdaFunctor = null;
+
+            Assert.DoesNotThrow(() => {
+                lambdaFunctor = (Func<int, int>)interpreter.VisitUnaryLambdaFuncNode(
+                                                new CUnaryLambdaFuncASTNode(type, new CValueASTNode(new int[] { value })));
+            });
+
+            Assert.AreEqual(res, lambdaFunctor(x));
+        }
+
+        [Test]
+        public void TestVisitUnaryLambdaFuncNode_CheckNestedLambdaPredicateGeneration_ReturnsLambdaPredicate()
+        {
+            IVisitor<Object> interpreter = new CInterpreter();
+
+            Func<int, int> lambdaFunctor = null;
+
+            Func<int, int> expectedLambdaFunctor = (int x) => { return x + x * (x - 2); };
+
+            int inputParameter = 5;
+
+            Assert.DoesNotThrow(() => {
+                // the interpreter should infer x + x * (x - 2) expression
+                lambdaFunctor = (Func<int, int>)interpreter.VisitUnaryLambdaFuncNode(
+                                                new CUnaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_ADD,
+                                                        new CUnaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_MUL,
+                                                                new CUnaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_SUB, new CValueASTNode(new int[] { 2 })))));
+            });
+
+            Assert.AreEqual(expectedLambdaFunctor(inputParameter), lambdaFunctor(inputParameter));
+        }
     }
 }

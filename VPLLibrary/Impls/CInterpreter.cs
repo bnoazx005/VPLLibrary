@@ -159,41 +159,28 @@ namespace VPLLibrary.Impls
 
         public Object VisitBinaryLambdaFuncNode(IBinaryLambdaFuncASTNode binaryLambdaFunc)
         {
+            if (binaryLambdaFunc == null)
+            {
+                throw new ArgumentNullException("binaryLambdaFunc", "The argument cannot equal to null");
+            }
+
             ParameterExpression x = Expression.Parameter(typeof(int), "x");
             ParameterExpression y = Expression.Parameter(typeof(int), "y");
 
             Expression lambdaBody = null;
 
-            switch (binaryLambdaFunc.OpType)
-            {
-                case E_OPERATION_TYPE.OT_ADD:
-                    lambdaBody = Expression.Add(x, y);
-                    break;
-                case E_OPERATION_TYPE.OT_SUB:
-                    lambdaBody = Expression.Subtract(x, y);
-                    break;
-                case E_OPERATION_TYPE.OT_MUL:
-                    lambdaBody = Expression.Multiply(x, y);
-                    break;
-                case E_OPERATION_TYPE.OT_DIV:
-                    lambdaBody = Expression.Divide(x, y);
-                    break;
-                case E_OPERATION_TYPE.OT_MOD:
-                    lambdaBody = Expression.Modulo(x, y);
-                    break;
-                //case E_OPERATION_TYPE.OT_POW:
-                //    lambdaBody = Expression.Power(x, y);
-                //    break;
-                default:
-                    lambdaBody = Expression.Empty();
-                    break;
-            }
+            lambdaBody = _createExpressionByOpType(binaryLambdaFunc.OpType, x, y);
 
             return Expression.Lambda(lambdaBody, x, y).Compile();
         }
 
         public Object VisitLambdaPredicateNode(ILambdaPredicateASTNode lambdaPredicate)
         {
+            if (lambdaPredicate == null)
+            {
+                throw new ArgumentNullException("lambdaPredicate", "The argument cannot equal to null");
+            }
+
             ParameterExpression x = Expression.Parameter(typeof(int), "x");
 
             Expression value = Expression.Constant(lambdaPredicate.FirstOperand.Value[0]);
@@ -226,6 +213,82 @@ namespace VPLLibrary.Impls
             }
 
             return Expression.Lambda(lambdaBody, x).Compile();
+        }
+
+        public Object VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc)
+        {
+            if (unaryLambdaFunc == null)
+            {
+                throw new ArgumentNullException("unaryLambdaFunc", "The argument cannot equal to null");
+            }
+
+            ParameterExpression x = Expression.Parameter(typeof(int), "x");
+
+            Expression lambdaBody = Expression.Empty();
+            
+            Expression y = (Expression)_visitUnaryLambdaFuncHelper(unaryLambdaFunc.Body, x);
+            
+            lambdaBody = _createExpressionByOpType(unaryLambdaFunc.OpType, x, y);
+
+            return Expression.Lambda(lambdaBody.Reduce(), x).Compile();
+        }
+
+        protected Object _visitUnaryLambdaFuncHelper(IASTNode node, Expression parameter)
+        {
+            if (node.Type == E_NODE_TYPE.NT_VALUE)
+            {
+                return Expression.Constant((node as IValueASTNode).Value[0]);
+            }
+
+            IUnaryLambdaFuncASTNode funcNode = node as IUnaryLambdaFuncASTNode;
+
+            if (funcNode == null)
+            {
+                throw new CRuntimeError("Invalid lambda's body");
+            }
+
+            IASTNode lambdaBody = funcNode.Body;
+
+            Expression value = null;
+
+            if (lambdaBody.Type == E_NODE_TYPE.NT_VALUE)
+            {
+                value = Expression.Constant((lambdaBody as IValueASTNode).Value[0]);
+
+                return _createExpressionByOpType(funcNode.OpType, parameter, value);
+            }
+
+            if (lambdaBody.Type != E_NODE_TYPE.NT_UNARY_LAMBDA_FUNC)
+            {
+                throw new CRuntimeError("Invalid lambda's body");
+            }
+
+            value = (Expression)_visitUnaryLambdaFuncHelper(lambdaBody, parameter);
+
+            return _createExpressionByOpType(funcNode.OpType, parameter, value);
+        }
+
+        protected Expression _createExpressionByOpType(E_OPERATION_TYPE type, Expression left, Expression right)
+        {
+            switch (type)
+            {
+                case E_OPERATION_TYPE.OT_ADD:
+                    return Expression.Add(left, right);
+
+                case E_OPERATION_TYPE.OT_SUB:
+                    return Expression.Subtract(left, right);
+
+                case E_OPERATION_TYPE.OT_MUL:
+                    return Expression.Multiply(left, right);
+
+                case E_OPERATION_TYPE.OT_DIV:
+                    return Expression.Divide(left, right);
+
+                case E_OPERATION_TYPE.OT_MOD:
+                    return Expression.Modulo(left, right);
+            }
+
+            return Expression.Empty();
         }
     }
 }
