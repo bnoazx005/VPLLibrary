@@ -196,6 +196,8 @@ namespace VPLLibraryTests.Tests
         [TestCase(E_OPERATION_TYPE.OT_MUL, 25, 2, 50)]
         [TestCase(E_OPERATION_TYPE.OT_DIV, 50, 2, 25)]
         [TestCase(E_OPERATION_TYPE.OT_MOD, 25, 2, 1)]
+        [TestCase(E_OPERATION_TYPE.OT_MAX, -6, 2, 2)]
+        [TestCase(E_OPERATION_TYPE.OT_MIN, -6, 2, -6)]
         //[TestCase(E_OPERATION_TYPE.OT_POW, 3, 2, 9)] works only for double, need to find some trick to implement it
         public void TestVisitBinaryLambdaFuncNode_CheckLambdaFunctorGeneration_ReturnsLambdaFunctor(E_OPERATION_TYPE type, int x, int y, int res)
         {

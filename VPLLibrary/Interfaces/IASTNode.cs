@@ -38,6 +38,8 @@ namespace VPLLibrary.Interfaces
         OT_DIV,
         OT_MOD,
         OT_POW,
+        OT_MAX,
+        OT_MIN
     }
 
 

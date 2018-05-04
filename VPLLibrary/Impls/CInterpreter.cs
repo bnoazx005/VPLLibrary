@@ -357,6 +357,12 @@ namespace VPLLibrary.Impls
 
                 case E_OPERATION_TYPE.OT_MOD:
                     return Expression.Modulo(left, right);
+
+                case E_OPERATION_TYPE.OT_MAX:
+                    return Expression.Call(typeof(Math).GetMethod("Max", new Type[] { typeof(Int32), typeof(Int32) }), left, right);
+
+                case E_OPERATION_TYPE.OT_MIN:
+                    return Expression.Call(typeof(Math).GetMethod("Min", new Type[] { typeof(Int32), typeof(Int32) }), left, right);
             }
 
             return Expression.Empty();
