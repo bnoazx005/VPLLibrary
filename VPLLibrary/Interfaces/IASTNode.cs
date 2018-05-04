@@ -19,6 +19,7 @@ namespace VPLLibrary.Interfaces
         NT_BINARY_LAMBDA_FUNC,
         NT_LAMBDA_PREDICATE,
         NT_UNARY_LAMBDA_FUNC,
+        NT_IF_THEN_ELSE,
         NT_DEFAULT
     }
 
@@ -251,5 +252,39 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IASTNode Body { get; }
+    }
+
+
+    /// <summary>
+    /// interface IIfThenElseASTNode
+    /// 
+    /// The interface represents if-then-else contruction within an AST
+    /// </summary>
+
+    public interface IIfThenElseASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a variable under checking
+        /// </summary>
+
+        IIdentifierASTNode Variable { get; }
+
+        /// <summary>
+        /// The readonly property returns a predicate's node to test a variable
+        /// </summary>
+
+        ILambdaPredicateASTNode Predicate { get; }
+
+        /// <summary>
+        /// The readonly property returns a node that will be executed if a predicate returns true
+        /// </summary>
+
+        IList<IASTNode> ThenBranch { get; }
+
+        /// <summary>
+        /// The readonly property returns a node that will be executed if a predicate returns false
+        /// </summary>
+
+        IList<IASTNode> ElseBranch { get; }
     }
 }
