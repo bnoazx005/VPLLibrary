@@ -18,6 +18,7 @@ namespace VPLLibrary.Interfaces
         NT_CALL,
         NT_BINARY_LAMBDA_FUNC,
         NT_LAMBDA_PREDICATE,
+        NT_UNARY_LAMBDA_FUNC,
         NT_DEFAULT
     }
 
@@ -227,5 +228,28 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IValueASTNode SecondOperand { get; }
+    }
+
+
+    /// <summary>
+    /// interface IUnaryLambdaFuncASTNode
+    /// 
+    /// The interface represents an unary lambda functor within an AST
+    /// </summary>
+
+    public interface IUnaryLambdaFuncASTNode
+    {
+        /// <summary>
+        /// The readonly property returns a type of mathematical operation
+        /// that the lambda executes
+        /// </summary>
+
+        E_OPERATION_TYPE OpType { get; }
+
+        /// <summary>
+        /// The readonly property returns a body's node of a functor
+        /// </summary>
+
+        IASTNode Body { get; }
     }
 }
