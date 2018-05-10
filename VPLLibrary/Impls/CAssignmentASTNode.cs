@@ -13,13 +13,15 @@ namespace VPLLibrary.Impls
     /// </summary>
 
     public class CAssignmentASTNode : CBaseASTNode, IAssigmentASTNode
-    {
-        protected string   mIdentifier;
-        
+    {        
         public CAssignmentASTNode(string id, IASTNode expr) :
             base(E_NODE_TYPE.NT_ASSIGMENT)
         {
-            mIdentifier = id;
+            IASTNode variableNode = new CIdentifierASTNode(id);
+
+            variableNode.Parent = this;
+
+            mChildren.Add(variableNode);
 
             expr.Parent = this;
 
@@ -41,11 +43,11 @@ namespace VPLLibrary.Impls
         /// The readonly property returns an identifier
         /// </summary>
 
-        public string Id
+        public IIdentifierASTNode Id
         {
             get
             {
-                return mIdentifier;
+                return mChildren[0] as IIdentifierASTNode;
             }
         }
 
@@ -57,7 +59,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mChildren[0];
+                return mChildren[1];
             }
         }
     }

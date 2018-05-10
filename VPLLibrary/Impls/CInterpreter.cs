@@ -90,7 +90,7 @@ namespace VPLLibrary.Impls
             {
                 int[] assignedValue = (rightOp as IValueASTNode).Value;
 
-                mEnvironment.Assign(assigment.Id, assignedValue);
+                mEnvironment.Assign(assigment.Id.Name, assignedValue);
 
                 return assignedValue;
             }
@@ -101,7 +101,7 @@ namespace VPLLibrary.Impls
 
                 int[] assignedValue = mEnvironment.Get(id);
 
-                mEnvironment.Assign(assigment.Id, assignedValue);
+                mEnvironment.Assign(assigment.Id.Name, assignedValue);
 
                 return assignedValue;
             }
@@ -109,7 +109,7 @@ namespace VPLLibrary.Impls
             // common case
             Object value = assigment.Expression.Accept(this);
 
-            mEnvironment.Assign(assigment.Id, (int[])value);
+            mEnvironment.Assign(assigment.Id.Name, (int[])value);
 
             return value;
         }

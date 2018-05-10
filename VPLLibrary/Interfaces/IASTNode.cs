@@ -125,7 +125,7 @@ namespace VPLLibrary.Interfaces
         /// The readonly property returns an identifier
         /// </summary>
 
-        string Id { get; }
+        IIdentifierASTNode Id { get; }
 
         /// <summary>
         /// The readonly property returns an expression
