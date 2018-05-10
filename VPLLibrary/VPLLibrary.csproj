@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impls\CASTPrinter.cs" />
     <Compile Include="Impls\CBaseASTNode.cs" />
     <Compile Include="Impls\CBinaryLambdaFuncASTNode.cs" />
     <Compile Include="Impls\CCallASTNode.cs" />
