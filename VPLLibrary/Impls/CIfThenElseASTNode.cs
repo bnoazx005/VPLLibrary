@@ -22,13 +22,18 @@ namespace VPLLibrary.Impls
                                   IASTNode thenBranch, IASTNode elseBranch):
             base(E_NODE_TYPE.NT_IF_THEN_ELSE)
         {
-            mVariable = var;
+            IASTNode variableNode  = var as IASTNode;
+            IASTNode predicateNode = pred as IASTNode;
 
-            mPredicate = pred;
+            variableNode.Parent  = this;
+            predicateNode.Parent = this;
+            thenBranch.Parent    = this;
+            elseBranch.Parent    = this;
 
-            mThenBranch = thenBranch;
-
-            mElseBranch = elseBranch;
+            mChildren.Add(variableNode);
+            mChildren.Add(predicateNode);
+            mChildren.Add(thenBranch);
+            mChildren.Add(elseBranch);
         }
 
         /// <summary>
@@ -50,7 +55,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mVariable;
+                return mChildren[0] as IIdentifierASTNode;
             }
         }
 
@@ -62,7 +67,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mPredicate;
+                return mChildren[1] as ILambdaPredicateASTNode;
             }
         }
 
@@ -74,7 +79,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mThenBranch;
+                return mChildren[2];
             }
         }
 
@@ -86,7 +91,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mElseBranch;
+                return mChildren[3];
             }
         }
     }

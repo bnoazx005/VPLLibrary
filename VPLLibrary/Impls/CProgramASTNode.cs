@@ -14,20 +14,17 @@ namespace VPLLibrary.Impls
 
     public class CProgramASTNode : CBaseASTNode, IProgramASTNode
     {
-        protected IList<IASTNode> mOperationsList;
-
         public CProgramASTNode() :
             base(E_NODE_TYPE.NT_PROGRAM)
         {
-            mOperationsList = new List<IASTNode>();
         }
 
         public CProgramASTNode(IList<IASTNode> commands):
             base(E_NODE_TYPE.NT_PROGRAM)
         {
-            mOperationsList = commands;
+            mChildren.AddRange(commands);
 
-            foreach (IASTNode operatorNode in mOperationsList)
+            foreach (IASTNode operatorNode in mChildren)
             {
                 operatorNode.Parent = this;
             }
@@ -52,7 +49,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mOperationsList;
+                return mChildren;
             }
         }
     }

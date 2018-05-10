@@ -14,19 +14,31 @@ namespace VPLLibrary.Impls
     public class CLambdaPredicateASTNode : CBaseASTNode, ILambdaPredicateASTNode
     {
         protected E_LOGIC_OP_TYPE mLogicOpType;
-        
-        protected IValueASTNode   mFirstOpValue;
 
-        protected IValueASTNode   mSecondOpValue; //needed when modulo comparison is used (stores 1 or 0)
+        /// <summary>
+        /// The base constructor
+        /// </summary>
+        /// <param name="type">A logical operation's type</param>
+        /// <param name="firstOp">The operand stores an integer value</param>
+        /// <param name="secondOp">The operand is needed when modulo comparison is used (stores 1 or 0)</param>
 
         public CLambdaPredicateASTNode(E_LOGIC_OP_TYPE type, IValueASTNode firstOp, IValueASTNode secondOp) :
             base(E_NODE_TYPE.NT_LAMBDA_PREDICATE)
         {
             mLogicOpType = type;
 
-            mFirstOpValue = firstOp;
-            
-            mSecondOpValue = secondOp;
+            IASTNode firstOpNode  = firstOp as IASTNode;
+            IASTNode secondOpNode = secondOp as IASTNode;
+
+            firstOpNode.Parent  = this;
+
+            if (secondOpNode != null)
+            {
+                secondOpNode.Parent = this;
+            }
+
+            mChildren.Add(firstOpNode);
+            mChildren.Add(secondOpNode);
         }
 
         /// <summary>
@@ -61,7 +73,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mFirstOpValue;
+                return mChildren[0] as IValueASTNode;
             }
         }
 
@@ -73,7 +85,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mSecondOpValue;
+                return mChildren[1] as IValueASTNode;
             }
         }
     }

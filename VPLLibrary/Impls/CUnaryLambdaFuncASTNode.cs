@@ -14,17 +14,15 @@ namespace VPLLibrary.Impls
     public class CUnaryLambdaFuncASTNode : CBaseASTNode, IUnaryLambdaFuncASTNode
     {
         protected E_OPERATION_TYPE mOpType;
-
-        protected IASTNode         mBody;
-
+        
         public CUnaryLambdaFuncASTNode(E_OPERATION_TYPE type, IASTNode body) :
             base(E_NODE_TYPE.NT_UNARY_LAMBDA_FUNC)
         {
             mOpType = type;
+            
+            body.Parent = this;
 
-            mBody = body;
-
-            mBody.Parent = this;
+            mChildren.Add(body);
         }
 
         /// <summary>
@@ -59,7 +57,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mBody;
+                return mChildren[0];
             }
         }
     }
