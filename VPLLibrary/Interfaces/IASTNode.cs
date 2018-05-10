@@ -86,6 +86,14 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         IASTNode Parent { get; set; }
+
+        /// <summary>
+        /// The indexer provides mechanisms to iterate over node's children
+        /// </summary>
+        /// <param name="childId">A child's id</param>
+        /// <returns>A reference to specified child</returns>
+
+        IASTNode this[int childId] { get; set; }
     }
 
 

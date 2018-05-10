@@ -24,6 +24,8 @@ namespace VPLLibrary.Impls
             mIdentifier = id;
 
             mExpression = right;
+
+            mExpression.Parent = this;
         }
 
         /// <summary>

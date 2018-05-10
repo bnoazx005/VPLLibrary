@@ -24,6 +24,11 @@ namespace VPLLibrary.Impls
             mIntrinsicType = type;
 
             mArgumentsList = arguments;
+
+            foreach (IASTNode argumentNode in arguments)
+            {
+                argumentNode.Parent = this;
+            }
         }
 
         /// <summary>

@@ -26,6 +26,11 @@ namespace VPLLibrary.Impls
             base(E_NODE_TYPE.NT_PROGRAM)
         {
             mOperationsList = commands;
+
+            foreach (IASTNode operatorNode in mOperationsList)
+            {
+                operatorNode.Parent = this;
+            }
         }
 
         /// <summary>

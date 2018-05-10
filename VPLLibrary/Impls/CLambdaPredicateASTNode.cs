@@ -25,7 +25,7 @@ namespace VPLLibrary.Impls
             mLogicOpType = type;
 
             mFirstOpValue = firstOp;
-
+            
             mSecondOpValue = secondOp;
         }
 

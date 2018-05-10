@@ -23,6 +23,8 @@ namespace VPLLibrary.Impls
             mOpType = type;
 
             mBody = body;
+
+            mBody.Parent = this;
         }
 
         /// <summary>
