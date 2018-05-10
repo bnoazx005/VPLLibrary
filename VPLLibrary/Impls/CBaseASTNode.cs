@@ -13,14 +13,18 @@ namespace VPLLibrary.Impls
 
     public abstract class CBaseASTNode: IASTNode
     {
-        protected E_NODE_TYPE    mType;
+        protected E_NODE_TYPE     mType;
 
-        protected IASTNode       mParentNode;
+        protected IASTNode        mParentNode;
 
-        protected List<IASTNode> mChildren;
+        protected int             mNodeId;
+
+        protected IList<IASTNode> mChildren;
 
         public CBaseASTNode(E_NODE_TYPE type = E_NODE_TYPE.NT_DEFAULT)
         {
+            mNodeId = -1;
+
             mType = type;
 
             mChildren = new List<IASTNode>();
@@ -101,6 +105,23 @@ namespace VPLLibrary.Impls
             get
             {
                 return mChildren.Count;
+            }
+        }
+
+        /// <summary>
+        /// The property provides get/set methods to change node's id
+        /// </summary>
+
+        public int NodeId
+        {
+            get
+            {
+                return mNodeId;
+            }
+
+            set
+            {
+                mNodeId = value;
             }
         }
     }

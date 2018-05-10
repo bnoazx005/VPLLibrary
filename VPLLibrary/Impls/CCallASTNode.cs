@@ -25,9 +25,16 @@ namespace VPLLibrary.Impls
 
             mArgumentsList = arguments;
 
-            foreach (IASTNode argumentNode in arguments)
+            int argumentsCount = arguments.Count;
+
+            IASTNode currArgument = null;
+
+            for (int i = 0; i < argumentsCount; ++i)
             {
-                argumentNode.Parent = this;
+                currArgument = mArgumentsList[i];
+
+                currArgument.NodeId = i;
+                currArgument.Parent = this;
             }
         }
 

@@ -100,6 +100,12 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         int ChildrenCount { get; }
+
+        /// <summary>
+        /// The property provides get/set methods to change node's id
+        /// </summary>
+
+        int NodeId { get; set; }
     }
 
 

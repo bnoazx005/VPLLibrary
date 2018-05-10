@@ -32,13 +32,18 @@ namespace VPLLibrary.Impls
 
             firstOpNode.Parent  = this;
 
+            firstOpNode.NodeId = 0;
+
+            mChildren.Add(firstOpNode);
+
             if (secondOpNode != null)
             {
                 secondOpNode.Parent = this;
-            }
 
-            mChildren.Add(firstOpNode);
-            mChildren.Add(secondOpNode);
+                secondOpNode.NodeId = 1;
+
+                mChildren.Add(secondOpNode);
+            }
         }
 
         /// <summary>

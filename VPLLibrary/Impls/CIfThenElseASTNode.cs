@@ -30,6 +30,11 @@ namespace VPLLibrary.Impls
             thenBranch.Parent    = this;
             elseBranch.Parent    = this;
 
+            variableNode.NodeId  = 0;
+            predicateNode.NodeId = 1;
+            thenBranch.NodeId    = 2;
+            elseBranch.NodeId    = 3;
+
             mChildren.Add(variableNode);
             mChildren.Add(predicateNode);
             mChildren.Add(thenBranch);

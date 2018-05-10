@@ -21,9 +21,13 @@ namespace VPLLibrary.Impls
 
             variableNode.Parent = this;
 
+            variableNode.NodeId = 0;
+
             mChildren.Add(variableNode);
 
             expr.Parent = this;
+
+            expr.NodeId = 1;
 
             mChildren.Add(expr);
         }

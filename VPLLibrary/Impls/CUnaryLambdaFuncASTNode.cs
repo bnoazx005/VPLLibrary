@@ -22,6 +22,8 @@ namespace VPLLibrary.Impls
             
             body.Parent = this;
 
+            body.NodeId = 0;
+
             mChildren.Add(body);
         }
 

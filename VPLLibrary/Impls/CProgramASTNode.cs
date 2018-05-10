@@ -22,11 +22,18 @@ namespace VPLLibrary.Impls
         public CProgramASTNode(IList<IASTNode> commands):
             base(E_NODE_TYPE.NT_PROGRAM)
         {
-            mChildren.AddRange(commands);
+            mChildren = commands;
 
-            foreach (IASTNode operatorNode in mChildren)
+            int operatorsCount = commands.Count;
+
+            IASTNode currOperator = null;
+
+            for (int i = 0; i < operatorsCount; ++i)
             {
-                operatorNode.Parent = this;
+                currOperator = mChildren[i];
+
+                currOperator.NodeId = i;
+                currOperator.Parent = this;
             }
         }
 
