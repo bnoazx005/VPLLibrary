@@ -58,6 +58,22 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            if (mChildren.Count <= 1)
+            {
+                return new CLambdaPredicateASTNode(mLogicOpType, mChildren[0].Clone() as IValueASTNode, null);
+            }
+
+            return new CLambdaPredicateASTNode(mLogicOpType, mChildren[0].Clone() as IValueASTNode, 
+                                               mChildren[1].Clone() as IValueASTNode);
+        }
+
+        /// <summary>
         /// The readonly property returns a type of boolean operation
         /// that the lambda executes
         /// </summary>

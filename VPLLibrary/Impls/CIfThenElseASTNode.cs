@@ -10,14 +10,6 @@ namespace VPLLibrary.Impls
 
     public class CIfThenElseASTNode: CBaseASTNode, IIfThenElseASTNode
     {
-        protected IIdentifierASTNode      mVariable;
-
-        protected ILambdaPredicateASTNode mPredicate;
-
-        protected IASTNode                mThenBranch;
-
-        protected IASTNode                mElseBranch;
-
         public CIfThenElseASTNode(IIdentifierASTNode var, ILambdaPredicateASTNode pred, 
                                   IASTNode thenBranch, IASTNode elseBranch):
             base(E_NODE_TYPE.NT_IF_THEN_ELSE)
@@ -50,6 +42,19 @@ namespace VPLLibrary.Impls
         public override T Accept<T>(IVisitor<T> interpreter)
         {
             return interpreter.VisitIfThenElseNode(this);
+        }
+
+        /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            return new CIfThenElseASTNode(mChildren[0].Clone() as IIdentifierASTNode,
+                                          mChildren[1].Clone() as ILambdaPredicateASTNode,
+                                          mChildren[2].Clone() as IASTNode,
+                                          mChildren[3].Clone() as IASTNode);
         }
 
         /// <summary>

@@ -44,6 +44,16 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            return new CAssignmentASTNode((mChildren[0] as IIdentifierASTNode).Name, mChildren[1].Clone() as IASTNode);
+        }
+
+        /// <summary>
         /// The readonly property returns an identifier
         /// </summary>
 

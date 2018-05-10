@@ -1,4 +1,5 @@
-﻿using VPLLibrary.Interfaces;
+﻿using System;
+using VPLLibrary.Interfaces;
 
 
 namespace VPLLibrary.Impls
@@ -28,6 +29,20 @@ namespace VPLLibrary.Impls
         public override T Accept<T>(IVisitor<T> interpreter)
         {
             return interpreter.VisitValueNode(this);
+        }
+
+        /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            int[] valueCopy = new int[mValue.Length];
+
+            Array.Copy(mValue, valueCopy, mValue.Length);
+
+            return new CValueASTNode(valueCopy);
         }
 
         /// <summary>

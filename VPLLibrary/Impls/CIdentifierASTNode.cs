@@ -31,6 +31,16 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            return new CIdentifierASTNode(mName);
+        }
+
+        /// <summary>
         /// The readonly property returns an identifier
         /// </summary>
 

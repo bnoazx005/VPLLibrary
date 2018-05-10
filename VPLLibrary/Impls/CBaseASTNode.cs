@@ -39,6 +39,13 @@ namespace VPLLibrary.Impls
         public abstract T Accept<T>(IVisitor<T> interpreter);
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public abstract object Clone();
+
+        /// <summary>
         /// The readonly property returns a type of a node
         /// </summary>
 

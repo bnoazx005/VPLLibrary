@@ -32,6 +32,16 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            return new CBinaryLambdaFuncASTNode(mOpType);
+        }
+
+        /// <summary>
         /// The readonly property returns a type of mathematical operation
         /// that the lambda executes
         /// </summary>

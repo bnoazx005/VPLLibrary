@@ -50,6 +50,23 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            IList<IASTNode> argsList = new List<IASTNode>();
+
+            foreach (IASTNode currArg in mChildren)
+            {
+                argsList.Add(currArg.Clone() as IASTNode);
+            }
+
+            return new CCallASTNode(mIntrinsicType, argsList);
+        }
+
+        /// <summary>
         /// The readonly property returns a name of a function
         /// </summary>
 

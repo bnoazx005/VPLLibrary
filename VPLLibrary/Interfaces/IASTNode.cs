@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using VPLLibrary.Impls;
 
 
@@ -65,7 +66,7 @@ namespace VPLLibrary.Interfaces
     /// The interface represents a single AST node's functionality
     /// </summary>
 
-    public interface IASTNode
+    public interface IASTNode: ICloneable
     {
         /// <summary>
         /// The method accepts current node to a interpreter's reference

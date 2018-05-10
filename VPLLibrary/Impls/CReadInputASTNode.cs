@@ -28,5 +28,15 @@ namespace VPLLibrary.Impls
         {
             return interpreter.VisitReadInputNode(this);
         }
+
+        /// <summary>
+        /// The method creates deep clone of a node
+        /// </summary>
+        /// <returns>A cloned node</returns>
+
+        public override object Clone()
+        {
+            return new CReadInputASTNode(mType == E_NODE_TYPE.NT_READ_INT_ARRAY ? true : false);
+        }
     }
 }
