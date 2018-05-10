@@ -94,6 +94,12 @@ namespace VPLLibrary.Interfaces
         /// <returns>A reference to specified child</returns>
 
         IASTNode this[int childId] { get; set; }
+
+        /// <summary>
+        /// The readonly property returns a number of children
+        /// </summary>
+
+        int ChildrenCount { get; }
     }
 
 

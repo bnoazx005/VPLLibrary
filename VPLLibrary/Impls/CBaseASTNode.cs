@@ -91,5 +91,17 @@ namespace VPLLibrary.Impls
                 mChildren[childId] = value;
             }
         }
+
+        /// <summary>
+        /// The readonly property returns a number of children
+        /// </summary>
+
+        public int ChildrenCount
+        {
+            get
+            {
+                return mChildren.Count;
+            }
+        }
     }
 }
