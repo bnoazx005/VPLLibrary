@@ -14,14 +14,16 @@ namespace VPLLibrary.Impls
 
     public class CAssignmentASTNode : CBaseASTNode, IAssigmentASTNode
     {
-        protected string mIdentifier;
+        protected string   mIdentifier;
+
+        protected IASTNode mExpression;
 
         public CAssignmentASTNode(string id, IASTNode right) :
             base(E_NODE_TYPE.NT_ASSIGMENT)
         {
             mIdentifier = id;
 
-            mRightChild = right;
+            mExpression = right;
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mRightChild;
+                return mExpression;
             }
         }
     }

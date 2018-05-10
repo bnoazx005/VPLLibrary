@@ -82,16 +82,10 @@ namespace VPLLibrary.Interfaces
         E_NODE_TYPE Type { get; }
 
         /// <summary>
-        /// The readonly property returns left child of a node
+        /// The readonly property returns a parent of a node
         /// </summary>
 
-        IASTNode Left { get; set; }
-
-        /// <summary>
-        /// The readonly property returns right child of a node
-        /// </summary>
-
-        IASTNode Right { get; set; }
+        IASTNode Parent { get; set; }
     }
 
 

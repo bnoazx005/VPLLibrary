@@ -13,15 +13,11 @@ namespace VPLLibrary.Impls
     {
         protected E_NODE_TYPE mType;
 
-        protected IASTNode    mLeftChild;
-
-        protected IASTNode    mRightChild;
+        protected IASTNode    mParentNode;
 
         public CBaseASTNode(E_NODE_TYPE type = E_NODE_TYPE.NT_DEFAULT)
         {
             mType = type;
-
-            mLeftChild = mRightChild = null;
         }
 
         /// <summary>
@@ -45,36 +41,19 @@ namespace VPLLibrary.Impls
         }
 
         /// <summary>
-        /// The readonly property returns left child of a node
+        /// The readonly property returns a parent of a node
         /// </summary>
 
-        public IASTNode Left
+        public IASTNode Parent
         {
             get
             {
-                return mLeftChild;
+                return mParentNode;
             }
 
             set
             {
-                mLeftChild = value;
-            }
-        }
-
-        /// <summary>
-        /// The readonly property returns right child of a node
-        /// </summary>
-
-        public IASTNode Right
-        {
-            get
-            {
-                return mRightChild;
-            }
-
-            set
-            {
-                mRightChild = value;
+                mParentNode = value;
             }
         }
     }
