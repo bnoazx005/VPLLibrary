@@ -14,8 +14,6 @@ namespace VPLLibrary.Impls
 
     public class CCallASTNode : CBaseASTNode, ICallASTNode
     {
-        protected IList<IASTNode>       mArgumentsList;
-
         protected E_INTRINSIC_FUNC_TYPE mIntrinsicType;
 
         public CCallASTNode(E_INTRINSIC_FUNC_TYPE type, IList<IASTNode> arguments) :
@@ -23,7 +21,7 @@ namespace VPLLibrary.Impls
         {
             mIntrinsicType = type;
 
-            mArgumentsList = arguments;
+            mChildren = arguments;
 
             int argumentsCount = arguments.Count;
 
@@ -31,7 +29,7 @@ namespace VPLLibrary.Impls
 
             for (int i = 0; i < argumentsCount; ++i)
             {
-                currArgument = mArgumentsList[i];
+                currArgument = mChildren[i];
 
                 currArgument.NodeId = i;
                 currArgument.Parent = this;
@@ -86,7 +84,7 @@ namespace VPLLibrary.Impls
         {
             get
             {
-                return mArgumentsList;
+                return mChildren;
             }
         }
     }
