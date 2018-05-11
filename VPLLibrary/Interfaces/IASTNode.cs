@@ -142,6 +142,20 @@ namespace VPLLibrary.Interfaces
     public interface IProgramASTNode
     {
         /// <summary>
+        /// The method adds a new operator in the end of inner array
+        /// </summary>
+        /// <param name="assigmentOp"></param>
+
+        void AddOperator(IASTNode assigmentOp);
+
+        /// <summary>
+        /// The method removes specified operator
+        /// </summary>
+        /// <param name="index">An index of an operator</param>
+
+        void RemoveOperator(int index);
+
+        /// <summary>
         /// The readonly property returns a list of commands
         /// </summary>
 

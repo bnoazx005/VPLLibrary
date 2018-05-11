@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using VPLLibrary.Interfaces;
+using System;
 
 
 namespace VPLLibrary.Impls
@@ -63,6 +64,36 @@ namespace VPLLibrary.Impls
             }
 
             return new CProgramASTNode(operatorsList);
+        }
+
+        /// <summary>
+        /// The method adds a new operator in the end of inner array
+        /// </summary>
+        /// <param name="assigmentOp"></param>
+
+        public void AddOperator(IASTNode assigmentOp)
+        {
+            if (assigmentOp == null)
+            {
+                throw new ArgumentNullException("assigmentOp", "The argument cannot equal to null");
+            }
+
+            mChildren.Add(assigmentOp);
+        }
+
+        /// <summary>
+        /// The method removes specified operator
+        /// </summary>
+        /// <param name="index">An index of an operator</param>
+
+        public void RemoveOperator(int index)
+        {
+            if (index < 0 || index >= mChildren.Count)
+            {
+                throw new IndexOutOfRangeException("index is out of range");
+            }
+
+            mChildren.RemoveAt(index);
         }
 
         /// <summary>
