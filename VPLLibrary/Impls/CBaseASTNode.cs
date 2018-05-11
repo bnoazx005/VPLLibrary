@@ -13,21 +13,25 @@ namespace VPLLibrary.Impls
 
     public abstract class CBaseASTNode: IASTNode
     {
-        protected E_NODE_TYPE     mType;
+        protected E_NODE_TYPE       mType;
 
-        protected IASTNode        mParentNode;
+        protected IASTNode          mParentNode;
 
-        protected int             mNodeId;
+        protected int               mNodeId;
 
-        protected IList<IASTNode> mChildren;
+        protected E_NODE_ATTRIBUTES mAttributes;
 
-        public CBaseASTNode(E_NODE_TYPE type = E_NODE_TYPE.NT_DEFAULT)
+        protected IList<IASTNode>   mChildren;
+
+        public CBaseASTNode(E_NODE_TYPE type)
         {
             mNodeId = -1;
 
             mType = type;
 
             mChildren = new List<IASTNode>();
+
+            mAttributes = E_NODE_ATTRIBUTES.NA_DEFAULT;
         }
 
         /// <summary>
@@ -129,6 +133,24 @@ namespace VPLLibrary.Impls
             set
             {
                 mNodeId = value;
+            }
+        }
+
+
+        /// <summary>
+        /// The property provides get/set methods to change attributes of a node
+        /// </summary>
+
+        public E_NODE_ATTRIBUTES Attributes
+        {
+            get
+            {
+                return mAttributes;
+            }
+
+            set
+            {
+                mAttributes = value;
             }
         }
     }

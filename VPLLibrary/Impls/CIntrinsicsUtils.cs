@@ -25,7 +25,7 @@ namespace VPLLibrary.Impls
         IFT_MAP,
         IFT_FILTER,
         IFT_VECOP,
-        IFT_DEFAULT
+        //IFT_DEFAULT
     }
 
 

@@ -13,10 +13,12 @@ namespace VPLLibrary.Impls
     {
         protected string mName;
 
-        public CIdentifierASTNode(string id) :
+        public CIdentifierASTNode(string id, E_NODE_ATTRIBUTES attributes = E_NODE_ATTRIBUTES.NA_DEFAULT) :
             base(E_NODE_TYPE.NT_IDENTIFIER)
         {
             mName = id;
+
+            mAttributes = attributes;
         }
 
         /// <summary>

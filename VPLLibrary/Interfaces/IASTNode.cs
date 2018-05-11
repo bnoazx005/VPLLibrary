@@ -23,7 +23,7 @@ namespace VPLLibrary.Interfaces
         NT_IF_THEN_ELSE,
         NT_READ_INT,
         NT_READ_INT_ARRAY,
-        NT_DEFAULT
+        //NT_DEFAULT
     }
 
 
@@ -40,7 +40,7 @@ namespace VPLLibrary.Interfaces
         OT_MOD,
         OT_MAX,
         OT_MIN,
-        OT_DEFAULT,
+        //OT_DEFAULT,
     }
 
 
@@ -57,7 +57,23 @@ namespace VPLLibrary.Interfaces
         LOT_EQ,         // ==
         LOT_NEQ,        // !=
         LOT_MOD,        // % (modulo comparison)
-        LOT_DEFAULT
+        //LOT_DEFAULT
+    }
+
+
+    /// <summary>
+    /// The enumeration contains all allowed attributes that can be applied
+    /// to a AST node
+    /// </summary>
+
+    [Flags]
+    public enum E_NODE_ATTRIBUTES
+    {
+        NA_SHOULD_BE_ARRAY_VALUE    = 0x1,
+        NA_SHOULD_BE_POSITIVE       = 0x2,
+        NA_SHOULD_BE_NONZERO        = 0x4,
+        NA_ID_SHOULD_EXIST          = 0x8,
+        NA_DEFAULT                  = 0x0
     }
 
 
@@ -108,6 +124,12 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         int NodeId { get; set; }
+
+        /// <summary>
+        /// The property provides get/set methods to change attributes of a node
+        /// </summary>
+
+        E_NODE_ATTRIBUTES Attributes { get; set; }
     }
 
 

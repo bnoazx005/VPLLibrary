@@ -254,8 +254,8 @@ namespace VPLLibrary.Impls
                 case E_OPERATION_TYPE.OT_MOD:
                     return "%";
 
-                case E_OPERATION_TYPE.OT_POW:
-                    return "**";
+                //case E_OPERATION_TYPE.OT_POW:
+                //    return "**";
 
                 case E_OPERATION_TYPE.OT_MAX:
                     return "MAX";

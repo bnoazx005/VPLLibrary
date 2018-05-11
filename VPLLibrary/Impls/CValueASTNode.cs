@@ -14,10 +14,12 @@ namespace VPLLibrary.Impls
     {
         protected int[] mValue;
 
-        public CValueASTNode(int[] value) :
+        public CValueASTNode(int[] value, E_NODE_ATTRIBUTES attributes = E_NODE_ATTRIBUTES.NA_DEFAULT) :
             base(E_NODE_TYPE.NT_VALUE)
         {
             mValue = value;
+
+            mAttributes = attributes;
         }
 
         /// <summary>
