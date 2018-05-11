@@ -27,7 +27,7 @@ namespace VPLLibrary.Impls
         {
             StringBuilder assigmentStr = new StringBuilder();
 
-            assigmentStr.AppendFormat("{0} <- {1}", assigment.Id, assigment.Expression.Accept(this));
+            assigmentStr.AppendFormat("{0} <- {1}", assigment.Id.Name, assigment.Expression.Accept(this));
 
             return assigmentStr.ToString();
         }
