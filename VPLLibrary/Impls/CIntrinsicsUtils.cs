@@ -276,9 +276,9 @@ namespace VPLLibrary.Impls
         {
             if (inputArray == null ||
                 firstIndex == null ||
-                firstIndex.Length != 1 ||
-                secondIndex == null ||
-                secondIndex.Length != 1)
+                secondIndex == null /*||
+                /*firstIndex.Length != 1 || 
+                 secondIndex.Length != 1*/)
             {
                 throw new CRuntimeError("Memory violation");
             }
@@ -290,8 +290,8 @@ namespace VPLLibrary.Impls
                 return mNullArray;
             }
 
-            int firstIndexValue  = firstIndex[0]; 
-            int secondIndexValue = secondIndex[0];
+            int firstIndexValue  = firstIndex.Length > 0 ? GetWrappedArrayIndex(firstIndex[0], inputArrayLength) : 0; 
+            int secondIndexValue = secondIndex.Length > 0 ? GetWrappedArrayIndex(secondIndex[0], inputArrayLength) : 0;
 
             if (firstIndexValue < 0 || secondIndexValue < 0)
             {
@@ -322,8 +322,8 @@ namespace VPLLibrary.Impls
         public static int[] GetIndexOf(int[] inputArray, int[] element)
         {
             if (inputArray == null ||
-                element == null ||
-                element.Length != 1)
+                element == null/* ||
+                element.Length != 1*/)
             {
                 throw new CRuntimeError("Memory violation");
             }
@@ -341,21 +341,23 @@ namespace VPLLibrary.Impls
         public static int[] GetElement(int[] inputArray, int[] element)
         {
             if (inputArray == null ||
-                element == null ||
+                element == null /*||
                 element.Length != 1 || 
-                element[0] < 0)
+                element[0] < 0*/)
             {
                 throw new CRuntimeError("Memory violation");
             }
 
             int arrayLength = inputArray.Length;
-
+            
             if (arrayLength == 0)
             {
                 return mNullArray;
             }
 
-            return new int[] { inputArray[element[0]] };
+            int wrappedIndex = element.Length > 0 ? GetWrappedArrayIndex(element[0], arrayLength) : 0;
+
+            return new int[] { inputArray[wrappedIndex] };
         }
         
         public static int[] GetLength(int[] inputArray)
@@ -455,6 +457,23 @@ namespace VPLLibrary.Impls
             }
 
             return resultArray;
+        }
+
+        /// <summary>
+        /// The method wraps up the specified index and makes it stay
+        /// within allowed range from 0 to +inf
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+
+        public static int GetWrappedArrayIndex(int index, int arrayLength)
+        {
+            if (index >= 0)
+            {
+                return index % arrayLength;
+            }
+
+            return arrayLength + index % arrayLength;
         }
     }
 }

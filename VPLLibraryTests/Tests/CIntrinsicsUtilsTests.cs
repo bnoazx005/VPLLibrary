@@ -153,5 +153,27 @@ namespace VPLLibraryTests.Tests
         {
             Assert.Throws<CRuntimeError>(() => { CIntrinsicsUtils.Reverse(null); });
         }
+
+        [Test]
+        public void TestGetWrappedArrayIndex_PassNegativeValueGreatherThenArrayLength_ReturnsWrappedIndexValue()
+        {
+            int testArrayLength = 14;
+            int testIndexValue = -15;
+
+            int wrappedIndexValue = CIntrinsicsUtils.GetWrappedArrayIndex(testIndexValue, testArrayLength);
+
+            Assert.IsTrue(wrappedIndexValue >= 0 && wrappedIndexValue < testArrayLength);
+        }
+
+        [Test]
+        public void TestGetWrappedArrayIndex_PassValueGreatherThenArrayLength_ReturnsWrappedIndexValue()
+        {
+            int testArrayLength = 14;
+            int testIndexValue = 15;
+
+            int wrappedIndexValue = CIntrinsicsUtils.GetWrappedArrayIndex(testIndexValue, testArrayLength);
+
+            Assert.IsTrue(wrappedIndexValue >= 0 && wrappedIndexValue < testArrayLength);
+        }
     }
 }
