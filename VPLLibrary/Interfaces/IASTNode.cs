@@ -40,7 +40,7 @@ namespace VPLLibrary.Interfaces
         OT_MOD,
         OT_MAX,
         OT_MIN,
-        OT_POW,
+        OT_DEFAULT,
     }
 
 
@@ -56,7 +56,8 @@ namespace VPLLibrary.Interfaces
         LOT_GE,         // >=
         LOT_EQ,         // ==
         LOT_NEQ,        // !=
-        LOT_MOD         // % (modulo comparison)
+        LOT_MOD,        // % (modulo comparison)
+        LOT_DEFAULT
     }
 
 
