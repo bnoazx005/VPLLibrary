@@ -19,7 +19,7 @@ namespace VPLLibrary.Impls
         {
             mValue = value;
 
-            mAttributes = attributes;
+            mAttributes = attributes | E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
         /// <summary>

@@ -16,6 +16,7 @@ namespace VPLLibrary.Impls
         public CReadInputASTNode(bool isArray):
             base(isArray ? E_NODE_TYPE.NT_READ_INT_ARRAY : E_NODE_TYPE.NT_READ_INT)
         {
+            mAttributes = E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
         /// <summary>

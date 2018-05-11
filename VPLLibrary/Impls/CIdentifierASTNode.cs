@@ -18,7 +18,7 @@ namespace VPLLibrary.Impls
         {
             mName = id;
 
-            mAttributes = attributes;
+            mAttributes = attributes | E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
         /// <summary>
