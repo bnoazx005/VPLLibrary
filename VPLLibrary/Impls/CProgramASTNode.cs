@@ -78,6 +78,9 @@ namespace VPLLibrary.Impls
                 throw new ArgumentNullException("assigmentOp", "The argument cannot equal to null");
             }
 
+            assigmentOp.Parent = this;
+            assigmentOp.NodeId = mChildren.Count;
+
             mChildren.Add(assigmentOp);
         }
 
@@ -94,6 +97,12 @@ namespace VPLLibrary.Impls
             }
 
             mChildren.RemoveAt(index);
+
+            // recompute nodes' ids
+            for (int i = index; i < mChildren.Count; ++i)
+            {
+                mChildren[i].NodeId = i;
+            }
         }
 
         /// <summary>
