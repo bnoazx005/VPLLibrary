@@ -74,6 +74,8 @@ namespace VPLLibrary.Interfaces
         NA_SHOULD_BE_NONZERO        = 0x4,
         NA_ID_SHOULD_EXIST          = 0x8,
         NA_IS_LEAF_NODE             = 0x10,
+        NA_LVALUE                   = 0x20,
+        NA_RVALUE                   = 0x30,
         NA_DEFAULT                  = 0x0
     }
 

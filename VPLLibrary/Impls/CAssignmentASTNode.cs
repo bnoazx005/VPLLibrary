@@ -17,7 +17,7 @@ namespace VPLLibrary.Impls
         public CAssignmentASTNode(string id, IASTNode expr) :
             base(E_NODE_TYPE.NT_ASSIGMENT)
         {
-            IASTNode variableNode = new CIdentifierASTNode(id);
+            IASTNode variableNode = new CIdentifierASTNode(id, E_NODE_ATTRIBUTES.NA_LVALUE);
 
             variableNode.Parent = this;
 

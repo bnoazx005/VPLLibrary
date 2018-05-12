@@ -121,7 +121,16 @@ namespace VPLLibrary.Impls
                 throw new ArgumentNullException("identifier", "The argument cannot equal to null");
             }
 
-            return identifier.Name;
+            IASTNode idNode = identifier as IASTNode;
+
+            if ((idNode.Attributes & E_NODE_ATTRIBUTES.NA_LVALUE) == E_NODE_ATTRIBUTES.NA_LVALUE)
+            {
+                return identifier.Name;
+            }
+            
+            int[] assignedValue = mEnvironment.Get(identifier.Name);
+
+            return assignedValue;
         }
 
         public Object VisitValueNode(IValueASTNode value)
@@ -260,7 +269,18 @@ namespace VPLLibrary.Impls
 
             Func<int, bool> predicate = (Func<int, bool>)(ifStatementNode.Predicate as IASTNode).Accept(this);
 
-            int[] evaluatedExpr = mEnvironment.Get((string)(ifStatementNode.Variable as IASTNode).Accept(this));
+            int[] evaluatedExpr = null;
+
+            IASTNode variableNode = ifStatementNode.Variable as IASTNode;
+
+            if ((variableNode.Attributes & E_NODE_ATTRIBUTES.NA_LVALUE) == E_NODE_ATTRIBUTES.NA_LVALUE)
+            {
+                evaluatedExpr = mEnvironment.Get((string)(variableNode).Accept(this)); // variable is lvalue
+            }
+            else
+            {
+                evaluatedExpr = (int[])variableNode.Accept(this); // variable is rvalue, replace it with its value
+            }
             
             bool conditionResult = evaluatedExpr.Length >= 1 ? predicate(evaluatedExpr[0]) : false;
 

@@ -48,11 +48,11 @@ namespace VPLLibraryTests.Tests
         }
 
         [Test]
-        public void TestVisitIdentifierNode_CorrectArgument_ReturnsName()
+        public void TestVisitLValueIdentifierNode_CorrectArgument_ReturnsName()
         {
             IVisitor<Object> interpreter = new CInterpreter();
 
-            IIdentifierASTNode identifierNode = new CIdentifierASTNode("TestId");
+            IIdentifierASTNode identifierNode = new CIdentifierASTNode("TestId", E_NODE_ATTRIBUTES.NA_LVALUE);
 
             var result = interpreter.VisitIdentifierNode(identifierNode);
 
@@ -418,6 +418,40 @@ namespace VPLLibraryTests.Tests
                 {
                     Assert.AreEqual(expectedResult[i], result[i]);
                 }
+            });
+        }
+
+        [Test]
+        public void TestEval_TestReferencingByIdentifierInExpr_ReturnsValueStoredWithinVar()
+        {
+            IInterpreter interpreter = new CInterpreter();
+
+            /*program looks like
+             * x <- int
+             * y <- IF x (> 0) THEN x ELSE NULL
+            */
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("z", new CIfThenElseASTNode(new CIdentifierASTNode("x", E_NODE_ATTRIBUTES.NA_ID_SHOULD_EXIST),
+                                                    new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_GT, new CValueASTNode(new int[] { 0 }), null),
+                                                    new CIdentifierASTNode("x", E_NODE_ATTRIBUTES.NA_ID_SHOULD_EXIST),
+                                                    new CValueASTNode(CIntrinsicsUtils.mNullArray)))
+            });
+
+            int[][] inputData = new int[][]
+            {
+                new int[] { 4 }, //x
+            };
+
+            int[] expectedResult = new int[] { 2, 2, 2, 2 };
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+
+                Assert.AreEqual(result.Length, 1);
+                Assert.AreEqual(inputData[0][0], result[0]);
             });
         }
     }
