@@ -18,6 +18,8 @@ namespace VPLLibrary.Impls
             base(E_NODE_TYPE.NT_BINARY_LAMBDA_FUNC)
         {
             mOpType = type;
+
+            mAttributes = E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
         /// <summary>

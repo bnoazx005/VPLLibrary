@@ -44,6 +44,8 @@ namespace VPLLibrary.Impls
 
                 mChildren.Add(secondOpNode);
             }
+
+            mAttributes = E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
         /// <summary>
