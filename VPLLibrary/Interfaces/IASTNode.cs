@@ -326,7 +326,7 @@ namespace VPLLibrary.Interfaces
         /// The readonly property returns a variable under checking
         /// </summary>
 
-        IIdentifierASTNode Variable { get; }
+        IASTNode Variable { get; }
 
         /// <summary>
         /// The readonly property returns a predicate's node to test a variable

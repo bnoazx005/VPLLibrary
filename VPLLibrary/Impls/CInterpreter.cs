@@ -271,9 +271,10 @@ namespace VPLLibrary.Impls
 
             int[] evaluatedExpr = null;
 
-            IASTNode variableNode = ifStatementNode.Variable as IASTNode;
+            IASTNode variableNode = ifStatementNode.Variable;
 
-            if ((variableNode.Attributes & E_NODE_ATTRIBUTES.NA_LVALUE) == E_NODE_ATTRIBUTES.NA_LVALUE)
+            if ((variableNode.Type == E_NODE_TYPE.NT_IDENTIFIER) && 
+                ((variableNode.Attributes & E_NODE_ATTRIBUTES.NA_LVALUE) == E_NODE_ATTRIBUTES.NA_LVALUE))
             {
                 evaluatedExpr = mEnvironment.Get((string)(variableNode).Accept(this)); // variable is lvalue
             }

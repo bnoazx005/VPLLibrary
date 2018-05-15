@@ -10,24 +10,23 @@ namespace VPLLibrary.Impls
 
     public class CIfThenElseASTNode: CBaseASTNode, IIfThenElseASTNode
     {
-        public CIfThenElseASTNode(IIdentifierASTNode var, ILambdaPredicateASTNode pred, 
+        public CIfThenElseASTNode(IASTNode var, ILambdaPredicateASTNode pred, 
                                   IASTNode thenBranch, IASTNode elseBranch):
             base(E_NODE_TYPE.NT_IF_THEN_ELSE)
         {
-            IASTNode variableNode  = var as IASTNode;
             IASTNode predicateNode = pred as IASTNode;
 
-            variableNode.Parent  = this;
+            var.Parent  = this;
             predicateNode.Parent = this;
             thenBranch.Parent    = this;
             elseBranch.Parent    = this;
 
-            variableNode.NodeId  = 0;
+            var.NodeId  = 0;
             predicateNode.NodeId = 1;
             thenBranch.NodeId    = 2;
             elseBranch.NodeId    = 3;
 
-            mChildren.Add(variableNode);
+            mChildren.Add(var);
             mChildren.Add(predicateNode);
             mChildren.Add(thenBranch);
             mChildren.Add(elseBranch);
@@ -51,7 +50,7 @@ namespace VPLLibrary.Impls
 
         public override object Clone()
         {
-            return new CIfThenElseASTNode(mChildren[0].Clone() as IIdentifierASTNode,
+            return new CIfThenElseASTNode(mChildren[0].Clone() as IASTNode,
                                           mChildren[1].Clone() as ILambdaPredicateASTNode,
                                           mChildren[2].Clone() as IASTNode,
                                           mChildren[3].Clone() as IASTNode);
@@ -61,11 +60,11 @@ namespace VPLLibrary.Impls
         /// The readonly property returns a variable under checking
         /// </summary>
 
-        public IIdentifierASTNode Variable
+        public IASTNode Variable
         {
             get
             {
-                return mChildren[0] as IIdentifierASTNode;
+                return mChildren[0];
             }
         }
 
