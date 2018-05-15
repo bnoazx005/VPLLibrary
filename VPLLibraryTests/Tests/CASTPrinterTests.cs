@@ -14,8 +14,8 @@ namespace VPLLibraryTests.Tests
         {
             var program = new CProgramASTNode(new List<IASTNode>()
             {
-                new CAssignmentASTNode("x", new CReadInputASTNode(true)),
-                new CAssignmentASTNode("y", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("x", new CReadInputASTNode(new CValueASTNode(new int[] { 0 }))),
+                new CAssignmentASTNode("y", new CReadInputASTNode(new CValueASTNode(new int[] { 1 }))),
                 new CAssignmentASTNode("z", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_VECOP,
                                                 new List<IASTNode>()
                                                 {

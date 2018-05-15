@@ -366,7 +366,7 @@ namespace VPLLibraryTests.Tests
             */
             var program = new CProgramASTNode(new List<IASTNode>()
             {
-                new CAssignmentASTNode("t", new CReadInputASTNode(true))
+                new CAssignmentASTNode("t", new CReadInputASTNode(new CValueASTNode(new int[] { 0 })))
             });
 
             int[][] inputData = new int[1][];
@@ -391,8 +391,8 @@ namespace VPLLibraryTests.Tests
             */
             var program = new CProgramASTNode(new List<IASTNode>()
             {
-                new CAssignmentASTNode("x", new CReadInputASTNode(true)),
-                new CAssignmentASTNode("y", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("x", new CReadInputASTNode(new CValueASTNode(new int[] { 0 }))),
+                new CAssignmentASTNode("y", new CReadInputASTNode(new CValueASTNode(new int[] { 1 }))),
                 new CAssignmentASTNode("z", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_VECOP, 
                                                 new List<IASTNode>()
                                                 {
@@ -432,7 +432,7 @@ namespace VPLLibraryTests.Tests
             */
             var program = new CProgramASTNode(new List<IASTNode>()
             {
-                new CAssignmentASTNode("x", new CReadInputASTNode(true)),
+                new CAssignmentASTNode("x", new CReadInputASTNode(new CValueASTNode(new int[] { 0 }))),
                 new CAssignmentASTNode("z", new CIfThenElseASTNode(new CIdentifierASTNode("x", E_NODE_ATTRIBUTES.NA_ID_SHOULD_EXIST),
                                                     new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_GT, new CValueASTNode(new int[] { 0 }), null),
                                                     new CIdentifierASTNode("x", E_NODE_ATTRIBUTES.NA_ID_SHOULD_EXIST),

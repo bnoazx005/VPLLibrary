@@ -13,9 +13,16 @@ namespace VPLLibrary.Impls
 
     public class CReadInputASTNode: CBaseASTNode, IReadInputASTNode
     {
-        public CReadInputASTNode(bool isArray):
-            base(isArray ? E_NODE_TYPE.NT_READ_INT_ARRAY : E_NODE_TYPE.NT_READ_INT)
+        public CReadInputASTNode(IValueASTNode index):
+            base(E_NODE_TYPE.NT_READ_INT_ARRAY)
         {
+            IASTNode indexNode = index as IASTNode;
+
+            mChildren.Add(indexNode);
+
+            indexNode.Parent = this;
+            indexNode.NodeId = 0;
+
             mAttributes = E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE;
         }
 
@@ -37,7 +44,7 @@ namespace VPLLibrary.Impls
 
         public override object Clone()
         {
-            return new CReadInputASTNode(mType == E_NODE_TYPE.NT_READ_INT_ARRAY ? true : false);
+            return new CReadInputASTNode(mChildren[0].Clone() as IValueASTNode);
         }
     }
 }
