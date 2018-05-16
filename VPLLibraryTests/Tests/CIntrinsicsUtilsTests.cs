@@ -186,5 +186,20 @@ namespace VPLLibraryTests.Tests
 
             Assert.IsTrue(wrappedIndexValue >= 0 && wrappedIndexValue < testArrayLength);
         }
+
+        [Test]
+        public void TestGetIndexOf_PassEmptyArray_ReturnsElementThatEqualsToZero()
+        {
+            var testArray = new int[] { 4, -4, 3, 13, 0, 10, 12, 1 };
+
+            int indexOfZero = System.Array.FindIndex(testArray, t => t == 0);
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = CIntrinsicsUtils.GetIndexOf(testArray, CIntrinsicsUtils.mNullArray);
+
+                Assert.AreEqual(indexOfZero, result[0]);
+            });
+        }
     }
 }

@@ -336,7 +336,9 @@ namespace VPLLibrary.Impls
                 return new int[] { -1 };
             }
 
-            return new int[] { Array.FindIndex(inputArray, t => t == element[0]) };
+            int elementValue = element.Length >= 1 ? element[0] : 0;
+
+            return new int[] { Array.FindIndex(inputArray, t => t == elementValue) };
         }
 
         public static int[] GetElement(int[] inputArray, int[] element)
