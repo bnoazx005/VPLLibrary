@@ -453,6 +453,67 @@ namespace VPLLibraryTests.Tests
                 Assert.AreEqual(result.Length, 1);
                 Assert.AreEqual(inputData[0][0], result[0]);
             });
-        }        
+        }
+
+        [TestCase(0)]
+        [TestCase(2)]
+        public void TestEval_TestReadArbitraryParameter_ReturnsReadParameter(int index)
+        {
+            IInterpreter interpreter = new CInterpreter();
+            
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CReadInputASTNode(new CValueASTNode(new int[] { index })))
+            });
+
+            int[][] inputData = new int[][]
+            {
+                new int[] { 4 }, //x
+            };
+
+            int[] expectedResult = new int[] { 2, 2, 2, 2 };
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+                                
+                if (index < inputData.Length)
+                {
+                    Assert.AreEqual(result.Length, 1);
+                    Assert.AreEqual(inputData[index][0], result[0]);
+                }
+                else
+                {
+                    Assert.AreSame(CIntrinsicsUtils.mNullArray, result);
+                }
+            });
+        }
+        
+        [Test]
+        public void TestEval_TestSafeDivisionOption_ReturnsCorrectDivisionResult()
+        {
+            IInterpreter interpreter = new CInterpreter(E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED);
+
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_MAP, new List<IASTNode>()
+                                                {
+                                                    new CUnaryLambdaFuncASTNode(E_OPERATION_TYPE.OT_DIV, new CValueASTNode(new int[] { 0 })),
+                                                    new CValueASTNode(new int[] {0, 1, 2, 3, 4 })
+                                                }))
+            });
+
+            int[][] inputData = new int[][]
+            {
+                new int[] { 4 }, //x
+            };
+
+            int[] expectedResult = new int[] { 2, 2, 2, 2 };
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+            });
+        }
     }
 }

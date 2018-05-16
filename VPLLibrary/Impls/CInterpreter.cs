@@ -40,6 +40,8 @@ namespace VPLLibrary.Impls
         public CInterpreter(E_INTERPRETER_ATTRIBUTES attributes = E_INTERPRETER_ATTRIBUTES.IA_DEFAULT)
         {
             mEnvironment = new CEnvironment();
+
+            mAttributes = attributes;
         }
 
         /// <summary>
@@ -270,7 +272,7 @@ namespace VPLLibrary.Impls
             Expression y = (Expression)_visitUnaryLambdaFuncHelper(unaryLambdaFunc.Body, x);
             
             lambdaBody = _createExpressionByOpType(unaryLambdaFunc.OpType, x, y);
-
+            
             return Expression.Lambda(lambdaBody.Reduce(), x).Compile();
         }
 
@@ -339,12 +341,16 @@ namespace VPLLibrary.Impls
                 throw new CRuntimeError("The data pointer is out of range");
             }
 
-            if (mCurrReadDataIndex >= mInputData.Length)
+            int[] readOpParameter = (int[])readNode.Index.Accept(this);
+
+            int readDataIndex = readOpParameter.Length >= 1 ? readOpParameter[0] : 0;
+
+            if (readDataIndex >= mInputData.Length)
             {
                 return CIntrinsicsUtils.mNullArray;
             }
 
-            int[] input = mInputData[mCurrReadDataIndex++];
+            int[] input = mInputData[readDataIndex];
 
             return input ?? CIntrinsicsUtils.mNullArray;
         }
@@ -427,12 +433,12 @@ namespace VPLLibrary.Impls
 
         protected Expression _createSafeDivisionOperator(Expression first, Expression second)
         {
-            return Expression.IfThenElse(Expression.Equal(second, Expression.Constant(0)), first, Expression.Divide(first, second));
+            return Expression.Condition(Expression.Equal(second, Expression.Constant(0)), first, Expression.Divide(first, second));
         }
 
         protected Expression _createSafeModuloOperator(Expression first, Expression second)
         {
-            return Expression.IfThenElse(Expression.Equal(second, Expression.Constant(0)), first, Expression.Modulo(first, second));
+            return Expression.Condition(Expression.Equal(second, Expression.Constant(0)), first, Expression.Modulo(first, second));
         }
     }
 }
