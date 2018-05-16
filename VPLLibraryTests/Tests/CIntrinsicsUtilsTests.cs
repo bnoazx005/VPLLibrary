@@ -158,7 +158,7 @@ namespace VPLLibraryTests.Tests
         public void TestGetWrappedArrayIndex_PassNegativeValueGreatherThenArrayLength_ReturnsWrappedIndexValue()
         {
             int testArrayLength = 14;
-            int testIndexValue = -15;
+            int testIndexValue = -30;
 
             int wrappedIndexValue = CIntrinsicsUtils.GetWrappedArrayIndex(testIndexValue, testArrayLength);
 
@@ -170,6 +170,17 @@ namespace VPLLibraryTests.Tests
         {
             int testArrayLength = 14;
             int testIndexValue = 15;
+
+            int wrappedIndexValue = CIntrinsicsUtils.GetWrappedArrayIndex(testIndexValue, testArrayLength);
+
+            Assert.IsTrue(wrappedIndexValue >= 0 && wrappedIndexValue < testArrayLength);
+        }
+
+        [Test]
+        public void TestGetWrappedArrayIndex_PassNevativeValueAbsGreaterThenArrayLength_ReturnsCorrectWrappedIndex()
+        {
+            int testArrayLength = 1;
+            int testIndexValue = -13;
 
             int wrappedIndexValue = CIntrinsicsUtils.GetWrappedArrayIndex(testIndexValue, testArrayLength);
 

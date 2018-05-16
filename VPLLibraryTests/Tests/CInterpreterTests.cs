@@ -453,6 +453,6 @@ namespace VPLLibraryTests.Tests
                 Assert.AreEqual(result.Length, 1);
                 Assert.AreEqual(inputData[0][0], result[0]);
             });
-        }
+        }        
     }
 }

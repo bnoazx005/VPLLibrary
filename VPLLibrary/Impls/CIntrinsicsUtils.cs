@@ -474,7 +474,7 @@ namespace VPLLibrary.Impls
                 return index % arrayLength;
             }
 
-            return arrayLength + index % arrayLength;
+            return (arrayLength + index % arrayLength) % arrayLength;
         }
     }
 }
