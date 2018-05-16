@@ -188,7 +188,7 @@ namespace VPLLibrary.Impls
 
         public string VisitReadInputNode(IReadInputASTNode readNode)
         {
-            return "[int]";
+            return string.Format("READ ({0})", readNode.Index.Accept(this));
         }
 
         public string VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc)

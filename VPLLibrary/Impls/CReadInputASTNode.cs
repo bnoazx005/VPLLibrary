@@ -46,5 +46,17 @@ namespace VPLLibrary.Impls
         {
             return new CReadInputASTNode(mChildren[0].Clone() as IValueASTNode);
         }
+
+        /// <summary>
+        /// The readonly property returns an index of an input parameter
+        /// </summary>
+
+        public IASTNode Index
+        {
+            get
+            {
+                return mChildren[0];
+            }
+        }
     }
 }

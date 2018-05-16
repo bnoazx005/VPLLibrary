@@ -356,5 +356,10 @@ namespace VPLLibrary.Interfaces
 
     public interface IReadInputASTNode
     {
+        /// <summary>
+        /// The readonly property returns an index of an input parameter
+        /// </summary>
+
+        IASTNode Index { get; }
     }
 }
