@@ -7,6 +7,19 @@ using VPLLibrary.Interfaces;
 namespace VPLLibrary.Impls
 {
     /// <summary>
+    /// The enumeration contains all possible flags that specify 
+    /// interpreter's work
+    /// </summary>
+
+    [Flags]
+    public enum E_INTERPRETER_ATTRIBUTES
+    {
+        IA_IS_SAFE_DIVISION_ENABLED = 0x1,
+        IA_DEFAULT                  = 0x0
+    }
+
+
+    /// <summary>
     /// class CInterpreter
     /// 
     /// This is main class within the library. It provides
@@ -16,13 +29,15 @@ namespace VPLLibrary.Impls
 
     public class CInterpreter: IInterpreter, IVisitor<Object>
     {
-        protected IEnvironment mEnvironment;
+        protected IEnvironment             mEnvironment;
 
-        protected int[][]      mInputData;
+        protected int[][]                  mInputData;
 
-        protected int          mCurrReadDataIndex;
+        protected int                      mCurrReadDataIndex;
 
-        public CInterpreter()
+        protected E_INTERPRETER_ATTRIBUTES mAttributes;
+
+        public CInterpreter(E_INTERPRETER_ATTRIBUTES attributes = E_INTERPRETER_ATTRIBUTES.IA_DEFAULT)
         {
             mEnvironment = new CEnvironment();
         }
@@ -225,7 +240,16 @@ namespace VPLLibrary.Impls
                     lambdaBody = Expression.GreaterThanOrEqual(x, value);
                     break;
                 case E_LOGIC_OP_TYPE.LOT_MOD:
-                    lambdaBody = Expression.Equal(Expression.Modulo(x, value), Expression.Constant(lambdaPredicate.SecondOperand.Value[0]));
+
+                    if ((mAttributes & E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED) == E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED)
+                    {
+                        lambdaBody = Expression.Equal(_createSafeModuloOperator(x, value), Expression.Constant(lambdaPredicate.SecondOperand.Value[0]));
+                    }
+                    else
+                    {
+                        lambdaBody = Expression.Equal(Expression.Modulo(x, value), Expression.Constant(lambdaPredicate.SecondOperand.Value[0]));
+                    }
+
                     break;
             }
 
@@ -374,9 +398,21 @@ namespace VPLLibrary.Impls
                     return Expression.Multiply(left, right);
 
                 case E_OPERATION_TYPE.OT_DIV:
+
+                    if ((mAttributes & E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED) == E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED)
+                    {
+                        return _createSafeDivisionOperator(left, right);
+                    }
+
                     return Expression.Divide(left, right);
 
                 case E_OPERATION_TYPE.OT_MOD:
+
+                    if ((mAttributes & E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED) == E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED)
+                    {
+                        return _createSafeModuloOperator(left, right);
+                    }
+
                     return Expression.Modulo(left, right);
 
                 case E_OPERATION_TYPE.OT_MAX:
@@ -387,6 +423,16 @@ namespace VPLLibrary.Impls
             }
 
             return Expression.Empty();
+        }
+
+        protected Expression _createSafeDivisionOperator(Expression first, Expression second)
+        {
+            return Expression.IfThenElse(Expression.Equal(second, Expression.Constant(0)), first, Expression.Divide(first, second));
+        }
+
+        protected Expression _createSafeModuloOperator(Expression first, Expression second)
+        {
+            return Expression.IfThenElse(Expression.Equal(second, Expression.Constant(0)), first, Expression.Modulo(first, second));
         }
     }
 }
