@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using VPLLibrary.Interfaces;
 
@@ -41,9 +42,20 @@ namespace VPLLibrary.Impls
         {
             StringBuilder argsStr = new StringBuilder();
 
-            foreach (IASTNode arg in call.Args)
+            IList<IASTNode> argsList = call.Args;
+
+            int argsCount = argsList.Count;
+
+            for (int i = 0; i < argsCount; ++i)
             {
-                argsStr.AppendFormat("{0} ", arg.Accept(this));
+                if (i < argsCount - 1)
+                {
+                    argsStr.AppendFormat("{0}, ", argsList[i].Accept(this));
+                }
+                else
+                {
+                    argsStr.AppendFormat("{0}", argsList[i].Accept(this));
+                }
             }
 
             StringBuilder callStr = new StringBuilder();
@@ -111,7 +123,7 @@ namespace VPLLibrary.Impls
                     break;
             }
 
-            callStr.AppendFormat(" {0}", argsStr);
+            callStr.AppendFormat("({0})", argsStr);
 
             return callStr.ToString();
         }
@@ -188,14 +200,14 @@ namespace VPLLibrary.Impls
 
         public string VisitReadInputNode(IReadInputASTNode readNode)
         {
-            return string.Format("READ ({0})", readNode.Index.Accept(this));
+            return string.Format("READ({0})", readNode.Index.Accept(this));
         }
 
         public string VisitUnaryLambdaFuncNode(IUnaryLambdaFuncASTNode unaryLambdaFunc)
         {
             StringBuilder lambdaStr = new StringBuilder();
 
-            lambdaStr.AppendFormat("({0}{1})",
+            lambdaStr.AppendFormat("({0} {1})",
                                    _constructOperationStr(unaryLambdaFunc.OpType),
                                    unaryLambdaFunc.Body.Accept(this));
 

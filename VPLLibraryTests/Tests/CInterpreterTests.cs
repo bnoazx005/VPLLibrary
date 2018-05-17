@@ -515,5 +515,31 @@ namespace VPLLibraryTests.Tests
                 var result = interpreter.Eval(program, inputData);
             });
         }
+
+        [Test]
+        public void TestEval_TestPassArrayAsIfVar_ShouldProcessCorrectlyWithoutExceptions()
+        {
+            IInterpreter interpreter = new CInterpreter(E_INTERPRETER_ATTRIBUTES.IA_IS_SAFE_DIVISION_ENABLED);
+
+            var program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CIfThenElseASTNode(new CReadInputASTNode(new CValueASTNode(new int[] { 0 })),
+                                                                   new CLambdaPredicateASTNode(E_LOGIC_OP_TYPE.LOT_NEQ, new CValueASTNode(new int[] { -8 }), null),
+                                                                   new CValueASTNode(new int[] { 0 }),
+                                                                   new CValueASTNode(new int[] { -1 })))
+            });
+
+            int[][] inputData = new int[][]
+            {
+                new int[] { 4 }, //x
+            };
+
+            int[] expectedResult = new int[] { 2, 2, 2, 2 };
+
+            Assert.DoesNotThrow(() =>
+            {
+                var result = interpreter.Eval(program, inputData);
+            });
+        }
     }
 }
