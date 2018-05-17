@@ -50,6 +50,40 @@ namespace VPLLibrary.Impls
         public abstract object Clone();
 
         /// <summary>
+        /// The method provides comparator for IASTNode type. It checks up
+        /// a structure of this node with specified one. Two subtrees are
+        /// equal if and only if all its nodes on particular positions have 
+        /// same attributes, types
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+
+        public virtual bool Equals(IASTNode obj)
+        {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj", "The argument cannot equal to null");
+            }
+
+            if (mType != obj.Type ||
+                mChildren.Count != obj.ChildrenCount ||
+                mAttributes != obj.Attributes)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < mChildren.Count; ++i)
+            {
+                if (!mChildren[i].Equals(obj[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// The readonly property returns a type of a node
         /// </summary>
 

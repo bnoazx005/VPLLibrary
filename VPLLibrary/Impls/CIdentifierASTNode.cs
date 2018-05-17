@@ -42,6 +42,18 @@ namespace VPLLibrary.Impls
             return new CIdentifierASTNode(mName);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_IDENTIFIER ||
+                obj.Attributes != mAttributes ||
+                (obj as IIdentifierASTNode).Name != mName)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// The readonly property returns an identifier
         /// </summary>

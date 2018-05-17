@@ -75,6 +75,17 @@ namespace VPLLibrary.Impls
                                                mChildren[1].Clone() as IValueASTNode);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_LAMBDA_PREDICATE ||
+                (obj as ILambdaPredicateASTNode).LOPType != mLogicOpType)
+            {
+                return false;
+            }
+
+            return base.Equals(obj);
+        }
+
         /// <summary>
         /// The readonly property returns a type of boolean operation
         /// that the lambda executes

@@ -64,6 +64,17 @@ namespace VPLLibrary.Impls
             return new CCallASTNode(mIntrinsicType, argsList);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_CALL ||
+                (obj as ICallASTNode).IntrinsicType != mIntrinsicType)
+            {
+                return false;
+            }
+
+            return base.Equals(obj);
+        }
+
         /// <summary>
         /// The readonly property returns a name of a function
         /// </summary>

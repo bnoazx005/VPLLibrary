@@ -86,7 +86,7 @@ namespace VPLLibrary.Interfaces
     /// The interface represents a single AST node's functionality
     /// </summary>
 
-    public interface IASTNode: ICloneable
+    public interface IASTNode: ICloneable, IEquatable<IASTNode>
     {
         /// <summary>
         /// The method accepts current node to a interpreter's reference

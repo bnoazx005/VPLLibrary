@@ -48,6 +48,17 @@ namespace VPLLibrary.Impls
             return new CUnaryLambdaFuncASTNode(mOpType, mChildren[0].Clone() as IASTNode);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_UNARY_LAMBDA_FUNC ||
+                (obj as IUnaryLambdaFuncASTNode).OpType != mOpType)
+            {
+                return false;
+            }
+
+            return base.Equals(obj);
+        }
+
         /// <summary>
         /// The readonly property returns a type of mathematical operation
         /// that the lambda executes

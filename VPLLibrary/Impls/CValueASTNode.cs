@@ -47,6 +47,32 @@ namespace VPLLibrary.Impls
             return new CValueASTNode(valueCopy);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_VALUE ||
+                obj.Attributes != mAttributes)
+            {
+                return false;
+            }
+
+            int[] objValue = (obj as IValueASTNode).Value;
+
+            if (mValue.Length != objValue.Length)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < mValue.Length; ++i)
+            {
+                if (objValue[i] != mValue[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// The readonly property returns a value
         /// </summary>

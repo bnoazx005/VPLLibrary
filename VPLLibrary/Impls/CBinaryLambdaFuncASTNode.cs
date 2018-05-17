@@ -43,6 +43,18 @@ namespace VPLLibrary.Impls
             return new CBinaryLambdaFuncASTNode(mOpType);
         }
 
+        public override bool Equals(IASTNode obj)
+        {
+            if (obj.Type != E_NODE_TYPE.NT_BINARY_LAMBDA_FUNC ||
+                obj.Attributes != mAttributes ||
+                (obj as IBinaryLambdaFuncASTNode).OpType != mOpType)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// The readonly property returns a type of mathematical operation
         /// that the lambda executes
