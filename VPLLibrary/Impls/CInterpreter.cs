@@ -357,9 +357,13 @@ namespace VPLLibrary.Impls
 
         protected Object _visitUnaryLambdaFuncHelper(IASTNode node, Expression parameter)
         {
+            int[] valueArray = null;
+
             if (node.Type == E_NODE_TYPE.NT_VALUE)
             {
-                return Expression.Constant((node as IValueASTNode).Value[0]);
+                valueArray = (node as IValueASTNode).Value;
+
+                return Expression.Constant(valueArray.Length >= 1 ? valueArray[0] : 0);
             }
 
             IUnaryLambdaFuncASTNode funcNode = node as IUnaryLambdaFuncASTNode;
@@ -375,7 +379,9 @@ namespace VPLLibrary.Impls
 
             if (lambdaBody.Type == E_NODE_TYPE.NT_VALUE)
             {
-                value = Expression.Constant((lambdaBody as IValueASTNode).Value[0]);
+                valueArray = (lambdaBody as IValueASTNode).Value;
+
+                value = Expression.Constant(valueArray.Length >= 1 ? valueArray[0] : 0);
 
                 return _createExpressionByOpType(funcNode.OpType, parameter, value);
             }
