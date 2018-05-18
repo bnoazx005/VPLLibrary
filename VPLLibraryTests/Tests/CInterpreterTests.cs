@@ -19,8 +19,10 @@ namespace VPLLibraryTests.Tests
 
             int[][] input = new int[1][];
 
+            IInputStream inputStream = new CInputStream(input);
+
             Assert.Throws<ArgumentNullException>(() => { interpreter.Eval(program, null); });
-            Assert.Throws<ArgumentNullException>(() => { interpreter.Eval(null, input); });
+            Assert.Throws<ArgumentNullException>(() => { interpreter.Eval(null, inputStream); });
         }
         
         [Test]
@@ -32,7 +34,9 @@ namespace VPLLibraryTests.Tests
 
             int[][] input = new int[1][];
 
-            var result = interpreter.Eval(program, input);
+            IInputStream inputStream = new CInputStream(input);
+
+            var result = interpreter.Eval(program, inputStream);
             
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<int[]>(result);
@@ -94,8 +98,10 @@ namespace VPLLibraryTests.Tests
                 new CAssignmentASTNode("t", new CValueASTNode(expectedValue))
             });
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() => {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result, expectedValue);
             });
@@ -118,8 +124,10 @@ namespace VPLLibraryTests.Tests
                             new CAssignmentASTNode("v", new CValueASTNode(expectedValue)))
             });
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() => {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result, expectedValue);
             });
@@ -142,8 +150,10 @@ namespace VPLLibraryTests.Tests
                 new CAssignmentASTNode("v", new CIdentifierASTNode("t"))
             });
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() => {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result, expectedValue);
             });
@@ -181,8 +191,10 @@ namespace VPLLibraryTests.Tests
                 new CAssignmentASTNode("r", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_CONCAT, new List<IASTNode>() { new CIdentifierASTNode("t"), new CIdentifierASTNode("s") }))
             });
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() => {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 for (int i = 0; i < result.Length; ++i)
                 {
@@ -311,11 +323,12 @@ namespace VPLLibraryTests.Tests
             });
 
             int[][] inputData = new int[3][];
-
+        
+            IInputStream inputStream = new CInputStream(inputData);
 
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result.Length, 1);
                 Assert.AreEqual(result[0], testValue[0]);
@@ -343,11 +356,12 @@ namespace VPLLibraryTests.Tests
             });
 
             int[][] inputData = new int[3][];
-
+            
+            IInputStream inputStream = new CInputStream(inputData);
 
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result.Length, 1);
                 Assert.AreEqual(result[0], -1);
@@ -371,9 +385,11 @@ namespace VPLLibraryTests.Tests
 
             int[][] inputData = new int[1][];
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result, CIntrinsicsUtils.mNullArray);
             });
@@ -410,9 +426,11 @@ namespace VPLLibraryTests.Tests
 
             int[] expectedResult = new int[] { 2, 2, 2, 2 };
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 for (int i = 0; i < Math.Min(result.Length, expectedResult.Length); ++i)
                 {
@@ -446,9 +464,11 @@ namespace VPLLibraryTests.Tests
 
             int[] expectedResult = new int[] { 2, 2, 2, 2 };
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
 
                 Assert.AreEqual(result.Length, 1);
                 Assert.AreEqual(inputData[0][0], result[0]);
@@ -473,9 +493,11 @@ namespace VPLLibraryTests.Tests
 
             int[] expectedResult = new int[] { 2, 2, 2, 2 };
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
                                 
                 if (index < inputData.Length)
                 {
@@ -510,9 +532,11 @@ namespace VPLLibraryTests.Tests
 
             int[] expectedResult = new int[] { 2, 2, 2, 2 };
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
             });
         }
 
@@ -536,9 +560,11 @@ namespace VPLLibraryTests.Tests
 
             int[] expectedResult = new int[] { 2, 2, 2, 2 };
 
+            IInputStream inputStream = new CInputStream(inputData);
+
             Assert.DoesNotThrow(() =>
             {
-                var result = interpreter.Eval(program, inputData);
+                var result = interpreter.Eval(program, inputStream);
             });
         }
     }

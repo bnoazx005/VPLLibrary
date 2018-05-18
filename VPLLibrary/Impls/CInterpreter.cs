@@ -31,10 +31,8 @@ namespace VPLLibrary.Impls
     {
         protected IEnvironment             mEnvironment;
 
-        protected int[][]                  mInputData;
-
-        protected int                      mCurrReadDataIndex;
-
+        protected IInputStream             mInputStream;
+        
         protected E_INTERPRETER_ATTRIBUTES mAttributes;
 
         public CInterpreter(E_INTERPRETER_ATTRIBUTES attributes = E_INTERPRETER_ATTRIBUTES.IA_DEFAULT)
@@ -49,25 +47,23 @@ namespace VPLLibrary.Impls
         /// An input parameters could be integer arrays or integer values (represented as an array with single value).
         /// </summary>
         /// <param name="program">A program is represented as an AST</param>
-        /// <param name="inputData">Program's input data</param>
+        /// <param name="inputStream">Program's input data</param>
         /// <returns>An evaluated array of some data</returns>
 
-        public int[] Eval(IASTNode program, int[][] inputData)
+        public int[] Eval(IASTNode program, IInputStream inputStream)
         {
             if (program == null)
             {
                 throw new ArgumentNullException("program", "The argument cannot equal to null");
             }
 
-            if (inputData == null)
+            if (inputStream == null)
             {
                 throw new ArgumentNullException("inputData", "The argument cannot equal to null");
             }
 
-            mInputData = inputData;
-
-            mCurrReadDataIndex = 0;
-
+            mInputStream = inputStream;
+            
             mEnvironment.Clear();
 
             return (int[])program.Accept(this);
@@ -336,7 +332,7 @@ namespace VPLLibrary.Impls
                 throw new ArgumentNullException("readNode", "The argument cannot equal to null");
             }            
 
-            if (mInputData == null)
+            if (mInputStream == null)
             {
                 throw new CRuntimeError("The data pointer is out of range");
             }
@@ -345,14 +341,7 @@ namespace VPLLibrary.Impls
 
             int readDataIndex = readOpParameter.Length >= 1 ? readOpParameter[0] : 0;
 
-            if (readDataIndex >= mInputData.Length)
-            {
-                return CIntrinsicsUtils.mNullArray;
-            }
-
-            int[] input = mInputData[readDataIndex];
-
-            return input ?? CIntrinsicsUtils.mNullArray;
+            return mInputStream.Read(readDataIndex);
         }
 
         protected Object _visitUnaryLambdaFuncHelper(IASTNode node, Expression parameter)
