@@ -83,6 +83,33 @@ namespace VPLLibrary.Impls
             return true;
         }
 
+        protected int _getDepth(IASTNode node, int currDepth)
+        {
+            int childrenCount = node.ChildrenCount;
+
+            if (((node.Attributes & E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE) == E_NODE_ATTRIBUTES.NA_IS_LEAF_NODE) ||
+                childrenCount == 0)
+            {
+                return currDepth;
+            }
+
+            int maxDepth = int.MinValue;
+
+            IASTNode currChild = null;
+
+            for (int i = 0; i < childrenCount; ++i)
+            {
+                if ((currChild = node[i]) == null)
+                {
+                    continue;
+                }
+
+                maxDepth = Math.Max(maxDepth, _getDepth(currChild, currDepth + 1));
+            }
+
+            return maxDepth;
+        }
+
         /// <summary>
         /// The readonly property returns a type of a node
         /// </summary>
@@ -185,6 +212,18 @@ namespace VPLLibrary.Impls
             set
             {
                 mAttributes = value;
+            }
+        }
+
+        /// <summary>
+        /// The readonly property returns a depth of an AST
+        /// </summary>
+
+        public int Depth
+        {
+            get
+            {
+                return _getDepth(this, 0);
             }
         }
     }

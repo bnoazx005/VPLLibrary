@@ -181,5 +181,28 @@ namespace VPLLibraryTests.Tests
             Assert.IsFalse(firstValueNode.Equals(secondValueNode));
             Assert.IsFalse(secondValueNode.Equals(firstValueNode));
         }
+
+        [Test]
+        public void TestGetDepth_ComputeDepthOfTree_ReturnsTreeDepth()
+        {
+            IASTNode program = new CProgramASTNode(new List<IASTNode>()
+            {
+                new CAssignmentASTNode("x", new CReadInputASTNode(new CValueASTNode(new int[] {2 }))),
+                new CAssignmentASTNode("y", new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_GET,
+                                                    new List<IASTNode>()
+                                                    {
+                                                        new CReadInputASTNode(new CValueASTNode(new int[] {1 })),
+                                                        new CCallASTNode(E_INTRINSIC_FUNC_TYPE.IFT_LEN,
+                                                                new List<IASTNode>()
+                                                                {
+                                                                    new CValueASTNode(new int[] {0,2 })
+                                                                })
+                                                    }))
+            });
+
+            int expectedDepth = 4;
+
+            Assert.AreEqual(expectedDepth, program.Depth);
+        }
     }
 }

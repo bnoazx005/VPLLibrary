@@ -133,6 +133,12 @@ namespace VPLLibrary.Interfaces
         /// </summary>
 
         E_NODE_ATTRIBUTES Attributes { get; set; }
+
+        /// <summary>
+        /// The readonly property returns a depth of an AST
+        /// </summary>
+
+        int Depth { get; }
     }
 
 
